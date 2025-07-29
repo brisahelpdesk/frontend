@@ -1,4 +1,3 @@
-import { useFetchCategories } from "@/hooks/use-fetch-categories";
 import { Label } from "../../../components/ui/label";
 import {
   Select,
@@ -9,6 +8,7 @@ import {
 } from "../../../components/ui/select";
 import { Skeleton } from "../../../components/ui/skeleton";
 import type { SelectProps } from "@radix-ui/react-select";
+import { useFetchCategories } from "../hook/use-fetch-categories";
 
 export type Category = {
   id: number;
@@ -39,7 +39,7 @@ export function SelectCategory(props: SelectProps) {
         </SelectTrigger>
         <SelectContent>
           {props.children}
-          {data?.map(({ name, id }) => (
+          {data?.items?.map(({ name, id }) => (
             <SelectItem key={id + "category"} value={id.toString()}>
               {name}
             </SelectItem>

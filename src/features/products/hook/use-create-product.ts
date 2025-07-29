@@ -2,10 +2,10 @@ import { Api } from "@/lib/axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import type { Product } from "./use-fetch-products";
 import { toast } from "sonner";
 import { CreateProductSchema, type CreateProductFields } from "../product.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import type { Product } from "../product.model";
 
 // TODO: Refatorar para melhorar performance e evitar re-renderizações desnecessárias
 // TODO: Melhorar testabilidade e separação de preocupações

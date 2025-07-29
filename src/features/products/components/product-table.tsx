@@ -21,11 +21,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useQueryClient } from "@tanstack/react-query";
 import { Edit, MoreHorizontal, Package, Trash2 } from "lucide-react";
-import { ProductTableSkeleton } from "./product-table-skeleton";
 import { useFetchProducts } from "../hook/use-fetch-products";
-import type { Category } from "./select-product-category";
 
 const getTypeBadge = (type: string) => {
   return type === "product" ? (
@@ -46,25 +43,46 @@ const getTypeBadge = (type: string) => {
 };
 
 export function ProductTable() {
-  const queryClient = useQueryClient();
+  const { data } = useFetchProducts();
 
-  const { data, isLoading } = useFetchProducts();
-  const categories = queryClient.getQueryData<Category[]>(["categories"]) || [];
+  const totalItems = data?.totalItems || 0;
+  const startPage = data?.page ? (data.page - 1) * data.perPage + 1 : 1;
+  const endPage = data?.page ? data.page * data.perPage : 0;
 
-  if (isLoading) return <ProductTableSkeleton />;
+  if (data?.totalItems === 0)
+    return (
+      <Card className="mt-6 shadow-none">
+        <CardHeader>
+          <CardTitle>Lista de Produtos e Serviços</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="text-center py-8">
+            <Package className="mx-auto h-12 w-12 text-gray-400" />
+            <h3 className="mt-2 text-sm font-medium text-gray-900">
+              Nenhum produto encontrado
+            </h3>
+            <p className="mt-1 text-sm text-gray-500">
+              Tente ajustar os filtros ou adicione um novo produto.
+            </p>
+          </div>
+        </CardContent>
+      </Card>
+    );
 
   return (
     <Card className="mt-6 shadow-none">
       <CardHeader>
         <CardTitle>Lista de Produtos e Serviços</CardTitle>
-        <CardDescription>Mostrando 5 de 5 itens</CardDescription>
+        <CardDescription>
+          Mostrando {startPage} de{" "}
+          {endPage > totalItems ? data?.totalItems : endPage} itens
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <div className="overflow-x-auto">
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>ID</TableHead>
                 <TableHead>Nome</TableHead>
                 <TableHead>Tipo</TableHead>
                 <TableHead>Categoria</TableHead>
@@ -74,20 +92,12 @@ export function ProductTable() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {data?.map((product) => {
-                const {
-                  id,
-                  name,
-                  description,
-                  type,
-                  categoryId,
-                  isActive,
-                  createdAt,
-                } = product;
+              {data?.items?.map((product) => {
+                const { id, name, description, type, isActive, createdAt } =
+                  product;
 
                 return (
                   <TableRow key={id}>
-                    <TableCell className="font-medium">{id}</TableCell>
                     <TableCell>
                       <div>
                         <div className="font-medium">{name}</div>
@@ -99,7 +109,7 @@ export function ProductTable() {
                     <TableCell>{getTypeBadge(type)}</TableCell>
                     <TableCell>
                       <Badge variant="outline">
-                        {categories.find((cat) => cat.id === categoryId)?.name}
+                        {product.expand.category?.name}
                       </Badge>
                     </TableCell>
                     <TableCell>
@@ -145,18 +155,6 @@ export function ProductTable() {
             </TableBody>
           </Table>
         </div>
-
-        {data?.length === 0 && (
-          <div className="text-center py-8">
-            <Package className="mx-auto h-12 w-12 text-gray-400" />
-            <h3 className="mt-2 text-sm font-medium text-gray-900">
-              Nenhum produto encontrado
-            </h3>
-            <p className="mt-1 text-sm text-gray-500">
-              Tente ajustar os filtros ou adicione um novo produto.
-            </p>
-          </div>
-        )}
       </CardContent>
     </Card>
   );
