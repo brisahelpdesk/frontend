@@ -1,9 +1,12 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Search } from "lucide-react";
-import type { ComponentProps } from "react";
+import { useProductFilterActions, useProductFilters } from "./filter-product-store";
 
-export function SearchProductName(props: ComponentProps<"input">) {
+export function SearchProductProduct() {
+  const { setFilterGeral } = useProductFilterActions();
+  const { geral } = useProductFilters();
+  
   return (
     <div className="space-y-2">
       <Label>Buscar</Label>
@@ -12,8 +15,9 @@ export function SearchProductName(props: ComponentProps<"input">) {
         <Input
           placeholder="Buscar por nome ou descrição..."
           className="pl-10"
-          {...props}
           type="search"
+          value={geral}
+          onChange={(e) => setFilterGeral(e.target.value)}
         />
       </div>
     </div>

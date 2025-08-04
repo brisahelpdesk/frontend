@@ -1,21 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
-import { useSearchParams } from "react-router";
 import { fetchProducts } from "../product.services";
+import { useProductFilters } from "../components/filter/filter-product-store";
 
 
 export function useFetchProducts() {
-  const [searchParams] = useSearchParams();
-
-  const filters = {
-    name: searchParams.get("name"),
-    category: searchParams.get("category"),
-    type: searchParams.get("type"),
-    isActive: searchParams.get("isActive"),
-  };
+  const filters = useProductFilters();
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["products", filters],
-    queryFn: async () => await fetchProducts(filters, 1, 10),
+    queryFn: async () => await fetchProducts(filters),
   });
 
   return {

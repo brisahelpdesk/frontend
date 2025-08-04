@@ -5,6 +5,7 @@ import "./index.css";
 import { Router } from "./router";
 import { QueryProvider } from "./lib/query";
 import { Toaster } from "./components/ui/sonner";
+import { AuthProvider } from "./features/auth/auth-provider";
 
 const elementRoot = document.getElementById("root");
 
@@ -15,7 +16,9 @@ const root = createRoot(elementRoot);
 root.render(
   <StrictMode>
     <QueryProvider>
-      <Router />
+      <AuthProvider>
+        <Router />
+      </AuthProvider>
       <Toaster duration={6000} position="top-center"/>
     </QueryProvider>
   </StrictMode>

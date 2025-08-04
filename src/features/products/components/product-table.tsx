@@ -25,7 +25,7 @@ import { Edit, MoreHorizontal, Package, Trash2 } from "lucide-react";
 import { useFetchProducts } from "../hook/use-fetch-products";
 
 const getTypeBadge = (type: string) => {
-  return type === "product" ? (
+  return type === "PRODUCT" ? (
     <Badge
       variant="outline"
       className="bg-blue-50 text-blue-700 border-blue-200"
@@ -45,11 +45,7 @@ const getTypeBadge = (type: string) => {
 export function ProductTable() {
   const { data } = useFetchProducts();
 
-  const totalItems = data?.totalItems || 0;
-  const startPage = data?.page ? (data.page - 1) * data.perPage + 1 : 1;
-  const endPage = data?.page ? data.page * data.perPage : 0;
-
-  if (data?.totalItems === 0)
+  if (data?.length === 0)
     return (
       <Card className="mt-6 shadow-none">
         <CardHeader>
@@ -74,8 +70,7 @@ export function ProductTable() {
       <CardHeader>
         <CardTitle>Lista de Produtos e Serviços</CardTitle>
         <CardDescription>
-          Mostrando {startPage} de{" "}
-          {endPage > totalItems ? data?.totalItems : endPage} itens
+          Mostrando 4 de{" "} 4 itens
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -83,25 +78,28 @@ export function ProductTable() {
           <Table>
             <TableHeader>
               <TableRow>
+                <TableHead>ID</TableHead>
                 <TableHead>Nome</TableHead>
                 <TableHead>Tipo</TableHead>
                 <TableHead>Categoria</TableHead>
                 <TableHead>Status</TableHead>
+                <TableHead>Físico</TableHead>
                 <TableHead>Criado em</TableHead>
                 <TableHead className="text-right">Ações</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {data?.items?.map((product) => {
+              {data?.map((product) => {
                 const { id, name, description, type, isActive, createdAt } =
                   product;
 
                 return (
                   <TableRow key={id}>
-                    <TableCell>
+                    <TableCell>{id}</TableCell>
+                    <TableCell className="w-full max-w-2/5">
                       <div>
                         <div className="font-medium">{name}</div>
-                        <div className="text-sm text-gray-500 max-w-xs truncate">
+                        <div className="text-sm text-gray-500 max-w-full truncate">
                           {description}
                         </div>
                       </div>
@@ -109,7 +107,7 @@ export function ProductTable() {
                     <TableCell>{getTypeBadge(type)}</TableCell>
                     <TableCell>
                       <Badge variant="outline">
-                        {product.expand.category?.name}
+                        {product?.category?.name}
                       </Badge>
                     </TableCell>
                     <TableCell>
@@ -121,6 +119,18 @@ export function ProductTable() {
                         }
                       >
                         {isActive ? "Ativo" : "Inativo"}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>
+                      <Badge
+                        variant="outline"
+                        className={
+                          product.isPhysical
+                            ? "bg-blue-50 text-blue-700 border-blue-200"
+                            : "bg-yellow-50 text-yellow-700 border-yellow-200"
+                        }
+                      >
+                        {product.isPhysical ? "Sim" : "Não"}
                       </Badge>
                     </TableCell>
                     <TableCell>

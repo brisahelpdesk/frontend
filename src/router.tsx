@@ -13,34 +13,32 @@ import { TicketDetailsPage } from "./features/tickets/details/ticket-details.pag
 import { AuthLayout } from "./layouts/auth.layout";
 import type { ReactNode } from "react";
 
+
 export function Router(): ReactNode {
   return (
-      <BrowserRouter>
-        <Routes>
-          <Route path="/">
-            <Route element={<MainLayout />}>
-              <Route index element={<DashboardPage />} />
-              <Route path="tickets">
-                <Route index element={<TicketsPage />} />
-                <Route
-                  path="details/:ticketId"
-                  element={<TicketDetailsPage />}
-                />
-              </Route>
-              <Route path="users" element={<UsersPage />} />
-              <Route path="slas" element={<SlasPage />} />
-              <Route path="reports" element={<ReportsPage />} />
-              <Route path="products" element={<ProductsPage />} />
-              <Route path="settings" element={<SettingsPage />} />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/">
+          <Route element={<MainLayout />}>
+            <Route index element={<DashboardPage />} />
+            <Route path="tickets">
+              <Route index element={<TicketsPage />} />
+              <Route path="details/:ticketId" element={<TicketDetailsPage />} />
             </Route>
-            <Route path="auth" element={<AuthLayout />}>
-              <Route path="login">
-                <Route index element={<LoginPage />} />
-                <Route path="first-access" element={<FirstAccessPage />} />
-              </Route>
+            <Route path="users" element={<UsersPage />} />
+            <Route path="slas" element={<SlasPage />} />
+            <Route path="reports" element={<ReportsPage />} />
+            <Route path="products" element={<ProductsPage />} />
+            <Route path="settings" element={<SettingsPage />} />
+          </Route>
+          <Route path="auth" element={<AuthLayout />}>
+            <Route path="login">
+              <Route index element={<LoginPage />} />
+              <Route path="first-access" element={<FirstAccessPage />} />
             </Route>
           </Route>
-        </Routes>
-      </BrowserRouter>
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }

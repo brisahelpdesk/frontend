@@ -1,12 +1,9 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://127.0.0.1:8090/api/collections",
+  baseURL: "http://localhost:3000",
   headers: {
     "Content-Type": "application/json",
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE",
-    "Access-Control-Allow-Headers": "Content-Type, Authorization",
   },
 });
 
@@ -17,6 +14,7 @@ api.interceptors.request.use(
     return config;
   }
 );
+
 
 export interface ApiRequest<T> {
   method: "GET" | "POST" | "PUT" | "DELETE";

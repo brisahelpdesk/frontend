@@ -1,10 +1,9 @@
 import { Api } from "@/lib/axios";
-import type { Response } from "@/lib/response";
-import type { Category } from "../products/components/select-product-category";
+import type { Category } from "./category.model";
 
 export function fetchCategories() {
-  return Api.fetch<undefined, Response<Category[]>>({
+  return Api.fetch<undefined, Category[]>({
     method: "GET",
-    endpoint: "/categories/records",
+    endpoint: "/category-items",
   });
 }

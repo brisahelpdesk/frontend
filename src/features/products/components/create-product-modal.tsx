@@ -8,14 +8,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { Plus } from "lucide-react";
-import { SelectCategory } from "./select-product-category";
-import { SelectProductType } from "./select-product-type";
+import { Form } from "@/components/ui/form";
+import { FormFieldInput } from "@/components/form-field-input";
+import { FormFieldSelect } from "@/components/form-field-select";
+import { FormFieldSwitch } from "@/components/form-field-switch";
+import { FormFieldTextArea } from "@/components/form-field-text-area";
 import { useCreateProduct } from "../hook/use-create-product";
-import { SelectItem } from "@/components/ui/select";
+import { useFetchCategories } from "../hook/use-fetch-categories";
 
 export function CreateProductModal() {
   const {
@@ -27,6 +27,18 @@ export function CreateProductModal() {
     isPending,
     onSubmit,
   } = useCreateProduct();
+
+  const { data } = useFetchCategories();
+
+  const selectCategoryItems = data?.map(({ id, name }) => ({
+    value: id.toString(),
+    label: name,
+  })) || [];
+
+  const selectTypeItems = [
+    { value: "PRODUCT", label: "Produto" },
+    { value: "SERVICE", label: "Serviço" },
+  ];
 
   const loading = isPending || form.formState.isSubmitting;
 
@@ -46,97 +58,103 @@ export function CreateProductModal() {
           </DialogDescription>
         </DialogHeader>
 
-        <form className="space-y-4" onSubmit={onSubmit}>
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <SelectProductType
-                onValueChange={(value) => form.setValue("type", value)}
-                defaultValue="default"
-                value={form.watch("type")}
-                required
-              >
-                <SelectItem value="default" disabled>
-                  Selecione o tipo
-                </SelectItem>
-              </SelectProductType>
-
-              {form.formState.errors.type && (
-                <p className="text-red-600 text-sm">
-                  {form.formState.errors.type.message}
-                </p>
-              )}
-            </div>
-
-            <div className="space-y-2">
-              <SelectCategory
-                onValueChange={(value) => form.setValue("categoryId", value)}
-                defaultValue="default"
-                value={form.watch("categoryId")}
-                required
-              >
-                <SelectItem value="default" disabled>
-                  Selecione a categoria
-                </SelectItem>
-              </SelectCategory>
-              {form.formState.errors.categoryId && (
-                <p className="text-red-600 text-sm">
-                  {form.formState.errors.categoryId.message}
-                </p>
-              )}
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="name">Nome</Label>
-            <Input
+        <Form {...form}>
+          <form className="space-y-4" onSubmit={onSubmit}>
+            <FormFieldInput
+              control={form.control}
               id="name"
+              name="name"
+              label="Nome"
               placeholder="Digite o nome do produto ou serviço"
               required
-              {...form.register("name")}
             />
-            {form.formState.errors.name && (
-              <p className="text-red-600 text-sm">
-                {form.formState.errors.name.message}
-              </p>
-            )}
-          </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="description">Descrição</Label>
-            <Textarea
+            <FormFieldInput
+              control={form.control}
+              id="internalId"
+              name="internalId"
+              label="ID Interno"
+              placeholder="Digite o ID interno do produto ou serviço"
+            />
+
+            <div className="grid grid-cols-2 gap-4">
+              <FormFieldSelect
+                control={form.control}
+                name="type"
+                selectItems={selectTypeItems}
+                label="Tipo"
+                placeholder="Selecione o tipo"
+                required
+                showError
+              />
+
+              <FormFieldSelect
+                control={form.control}
+                selectItems={selectCategoryItems}
+                name="categoryId"
+                label="Categoria"
+                placeholder="Selecione uma categoria"
+                required
+                showError
+              />
+            </div>
+
+            <FormFieldTextArea
+              control={form.control}
               id="description"
-              placeholder="Descreva o produto ou serviço"
-              rows={3}
-              className="h-20 resize-none"
-              {...form.register("description")}
+              name="description"
+              label="Descrição"
+              className="resize-none"
+              placeholder="Digite uma descrição para o produto ou serviço"
+              description="Uma breve descrição do produto ou serviço"
+              showError
             />
-          </div>
 
-          <DialogFooter>
-            <Button
-              type="reset"
-              variant="outline"
-              onClick={closeModal}
-              disabled={loading}
-            >
-              Cancelar
-            </Button>
-            <Button
-              type="submit"
-              className="bg-blue-600 hover:bg-blue-700"
-              disabled={loading}
-            >
-              {loading ? (
-                <div className="flex items-center gap-2">
-                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                  Criando...
-                </div>
-              ) : (
-                <div className="flex items-center gap-2">Criar</div>
-              )}
-            </Button>
-          </DialogFooter>
-        </form>
+            <div className="grid grid-cols-2 space-x-4">
+              <FormFieldSwitch
+                control={form.control}
+                id="isActive"
+                name="isActive"
+                label="Ativo"
+                required
+              />
+
+              <FormFieldSwitch
+                control={form.control}
+                id="isPhysical"
+                name="isPhysical"
+                label="Físico"
+                required
+              />
+            </div>
+
+
+            <DialogFooter>
+              <Button
+                type="reset"
+                variant="outline"
+                onClick={closeModal}
+                disabled={loading}
+              >
+                Cancelar
+              </Button>
+              <Button
+                type="submit"
+                className="bg-blue-600 hover:bg-blue-700"
+                disabled={loading}
+              >
+                {loading ? (
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    Criando...
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-2">Criar</div>
+                )}
+              </Button>
+            </DialogFooter>
+          </form>
+        </Form>
       </DialogContent>
     </Dialog>
   );
