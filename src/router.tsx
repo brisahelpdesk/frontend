@@ -25,7 +25,10 @@ export function Router(): ReactNode {
               <Route index element={<TicketsPage />} />
               <Route path="details/:ticketId" element={<TicketDetailsPage />} />
             </Route>
-            <Route path="users" element={<UsersPage />} />
+            <Route
+              path="users"
+              element={<UsersPage />}
+            />
             <Route path="slas" element={<SlasPage />} />
             <Route path="reports" element={<ReportsPage />} />
             <Route path="products" element={<ProductsPage />} />
