@@ -2,18 +2,21 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { CreateProductSchema, type CreateProductFields } from "../product.schema";
+import {
+  CreateProductSchema,
+  type CreateProductFields,
+} from "../product.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { Product } from "../product.model";
 import { createProduct } from "../product.services";
+import { useProductFilters } from "../components/filter/filter-product-store";
 
 // TODO: Refatorar para melhorar performance e evitar re-renderizações desnecessárias
 // TODO: Melhorar testabilidade e separação de preocupações
 
-
 export function useCreateProduct() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  
+
   const form = useForm<CreateProductFields>({
     defaultValues: {
       name: "",
@@ -25,10 +28,11 @@ export function useCreateProduct() {
     },
 
     mode: "onBlur",
-    
+
     resolver: zodResolver(CreateProductSchema),
   });
 
+  const productFields = useProductFilters();
   const queryClient = useQueryClient();
 
   const { mutate, isPending } = useMutation({
@@ -37,16 +41,19 @@ export function useCreateProduct() {
     mutationFn: createProduct,
 
     onSuccess: (data) => {
-      toast.success(`Producto "${data.name}" criado com sucesso.`, {
+      toast.success("Producto criado com sucesso.", {
         richColors: true,
-        description: "O produto foi adicionado ao catálogo.",
+        description: `Produto ${data.name} foi adicionado à lista.`,
       });
-      
-      queryClient.setQueryData(["products"], (prev: Product[] | undefined) => {
-        if (!prev) return [data];
-        return [...prev, data];
-      });
-      
+
+      queryClient.setQueryData(
+        ["products", productFields],
+        (prev: Product[] | undefined) => {
+          if (!prev) return [data];
+          return [...prev, data];
+        }
+      );
+
       setIsModalOpen(false);
       form.reset();
     },
@@ -56,7 +63,7 @@ export function useCreateProduct() {
         richColors: true,
         description: "Por favor, verifique os dados e tente novamente.",
       });
-    }
+    },
   });
 
   function onSubmit(data: CreateProductFields) {
