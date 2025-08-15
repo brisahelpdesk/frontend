@@ -1,4 +1,3 @@
-import { InputPassword } from "@/components/input-password";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
@@ -74,11 +73,11 @@ export function LoginForm() {
               <FormLabel>Senha</FormLabel>
               <FormControl>
                 <div className="space-y-2">
-                  <InputPassword
+                  {/* <InputPassword
                     id="password"
                     placeholder="***********"
                     {...field}
-                  />
+                  /> */}
                 </div>
               </FormControl>
             </FormItem>
