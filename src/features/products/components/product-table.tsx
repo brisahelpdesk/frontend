@@ -8,12 +8,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
   Table,
   TableBody,
   TableCell,
@@ -21,8 +15,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Edit, MoreHorizontal, Package, Trash2 } from "lucide-react";
+import { Eye, Package } from "lucide-react";
 import { useFetchProducts } from "../hook/use-fetch-products";
+import { InternalLink } from "@/components/internal-link";
 
 const getTypeBadge = (type: string) => {
   return type === "PRODUCT" ? (
@@ -69,9 +64,7 @@ export function ProductTable() {
     <Card className="mt-6 shadow-none">
       <CardHeader>
         <CardTitle>Lista de Produtos e Serviços</CardTitle>
-        <CardDescription>
-          Mostrando 4 de{" "} 4 itens
-        </CardDescription>
+        <CardDescription>Mostrando 4 de 4 itens</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="overflow-x-auto">
@@ -106,9 +99,7 @@ export function ProductTable() {
                     </TableCell>
                     <TableCell>{getTypeBadge(type)}</TableCell>
                     <TableCell>
-                      <Badge variant="outline">
-                        {product?.category?.name}
-                      </Badge>
+                      <Badge variant="outline">{product?.category?.name}</Badge>
                     </TableCell>
                     <TableCell>
                       <Badge
@@ -141,23 +132,15 @@ export function ProductTable() {
                       })}
                     </TableCell>
                     <TableCell className="text-right">
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button variant="ghost" className="h-8 w-8 p-0">
-                            <MoreHorizontal className="h-4 w-4" />
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                          <DropdownMenuItem>
-                            <Edit className="mr-2 h-4 w-4" />
-                            Editar
-                          </DropdownMenuItem>
-                          <DropdownMenuItem className="text-red-600">
-                            <Trash2 className="mr-2 h-4 w-4" />
-                            Excluir
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
+                      <InternalLink href={`/products/${id}`}>
+                        <Button
+                          variant="ghost"
+                          className="h-8 w-8 p-0"
+                          title="Ações"
+                        >
+                          <Eye className="h-4 w-4" />
+                        </Button>
+                      </InternalLink>
                     </TableCell>
                   </TableRow>
                 );

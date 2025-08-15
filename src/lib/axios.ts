@@ -7,14 +7,11 @@ const api = axios.create({
   },
 });
 
-api.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem("token");
-    if (token) config.headers["Authorization"] = token;
-    return config;
-  }
-);
-
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");
+  if (token) config.headers["Authorization"] = token;
+  return config;
+});
 
 export interface ApiRequest<T> {
   method: "GET" | "POST" | "PUT" | "DELETE";
@@ -25,16 +22,17 @@ export interface ApiRequest<T> {
 
 export const Api = {
   async fetch<T, R>(request: ApiRequest<T>): Promise<R> {
+    const { method, endpoint, params, data } = request;
     try {
       const response = await api.request({
-        method: request.method,
-        url: request.endpoint,
-        params: request.params,
-        data: request.data,
+        method,
+        url: endpoint,
+        params,
+        data,
       });
       return response.data;
     } catch (error) {
       throw error;
     }
-  }
-}
+  },
+};

@@ -1,8 +1,8 @@
 import { AppPageHeader } from "@/components/app-page-header";
-import { ProductStatsList } from "./components/product-stats-list";
-import { ProductTable } from "./components/product-table";
-import { ProductFilter } from "./components/filter/product-filter";
-import { CreateProductModal } from "./components/create-product-modal";
+import { CreateProductModal } from "../components/create-product-modal";
+import { ProductStatsList } from "../components/product-stats-list";
+import { ProductFilter } from "../components/filter/product-filter";
+import { ProductTable } from "../components/product-table";
 
 export function ProductsPage() {
   return (

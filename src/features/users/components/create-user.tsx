@@ -11,33 +11,23 @@ import {
 } from "@/components/ui/dialog";
 import { Form } from "@/components/ui/form";
 import { Plus } from "lucide-react";
-import { useForm } from "react-hook-form";
+import { FormFieldSelect } from "@/components/form-field-select";
+import { FormFieldSwitch } from "@/components/form-field-switch";
+import { useCreateUser } from "../hooks/use-create-user";
 
-interface CreateUserFields {
-  internalId: string;
-  document: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  departmentId: number;
-  hiredAt: string;
-  dismissedAt: string | null;
-}
 
 export function CreateUser() {
-  const form = useForm<CreateUserFields>({
-    defaultValues: {
-      internalId: "",
-      document: "",
-      firstName: "",
-      lastName: "",
-      email: "",
-    },
-  });
+  const { form, onSubmit, isPending, departments } = useCreateUser();
+
+  const selectDepartmentItems =
+    departments?.map((department) => ({
+      value: department.id.toString(),
+      label: department.name,
+    })) || [];
 
   return (
     <Dialog>
-      <DialogTrigger>
+      <DialogTrigger asChild>
         <Button className="bg-blue-600 hover:bg-blue-700">
           <Plus className="w-4 h-4 mr-2" />
           Novo Usuário
@@ -52,39 +42,48 @@ export function CreateUser() {
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form>
+          <form onSubmit={onSubmit}>
             <div className="grid grid-cols-2 gap-4">
-              <FormFieldInput
-                control={form.control}
-                name=""
-                label="ID Interno"
-                placeholder="ID do usuário"
-                id="internalId"
-              />
-              <FormFieldInput
-                name="document"
-                label="Documento"
-                placeholder="CPF ou CNPJ"
-                control={form.control}
-                id="document"
-              />
-            </div>
-
-            <div className="grid grid-cols-2 gap-4 mt-4">
               <FormFieldInput
                 name="firstName"
                 label="Nome"
-                placeholder="Nome do usuário"
+                placeholder="Joao"
                 control={form.control}
                 id="firstName"
+                disabled={isPending}
+                required
               />
 
               <FormFieldInput
                 name="lastName"
                 label="Sobrenome"
-                placeholder="Sobrenome do usuário"
+                placeholder="Silva"
                 control={form.control}
                 id="lastName"
+                disabled={isPending}
+                required
+              />
+            </div>
+            <div className="grid grid-cols-2 gap-4 mt-4">
+              <FormFieldInput
+                name="document"
+                label="Documento"
+                placeholder="10010010010"
+                control={form.control}
+                id="document"
+                disabled={isPending}
+                required
+              />
+
+              <FormFieldSelect
+                name="departmentId"
+                label="Departamento"
+                placeholder="Selecione um departamento"
+                control={form.control}
+                id="departmentId"
+                selectItems={selectDepartmentItems}
+                disabled={isPending}
+                required
               />
             </div>
 
@@ -92,16 +91,32 @@ export function CreateUser() {
               <FormFieldInput
                 name="email"
                 label="E-mail"
-                placeholder="E-mail do usuário"
+                placeholder="email@exemple.com"
                 control={form.control}
                 id="email"
+                disabled={isPending}
+                required
+              />
+            </div>
+
+            <div className="mt-4 grid grid-cols-2 gap-4">
+              <FormFieldSwitch
+                name="isActive"
+                label="Ativo"
+                control={form.control}
+                id="isActive"
+                disabled={isPending}
               />
             </div>
 
             <DialogFooter className="mt-4">
               <div className="flex justify-end gap-2">
-                <Button variant="outline">Cancelar</Button>
-                <Button className="bg-blue-600 hover:bg-blue-700">
+                <Button variant="outline" type="reset">Cancelar</Button>
+                <Button
+                  disabled={isPending}
+                  type="submit"
+                  className="bg-blue-600 hover:bg-blue-700"
+                >
                   Cadastrar
                 </Button>
               </div>

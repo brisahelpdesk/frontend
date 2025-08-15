@@ -14,10 +14,12 @@ export interface FormFieldSelectProps extends SelectProps {
   control: Control<any>;
   selectItems: { value: string; label: string }[];
   name: string;
+  id?: string;
   label?: string;
   description?: string;
   showError?: boolean;
   placeholder?: string;
+  disabled?: boolean;
 }
 
 export function FormFieldSelect(props: FormFieldSelectProps) {
@@ -25,10 +27,12 @@ export function FormFieldSelect(props: FormFieldSelectProps) {
     control,
     selectItems,
     name,
+    id,
     placeholder,
     label,
     description,
     showError,
+    disabled,
     ...rest
   } = props;
 
@@ -44,14 +48,14 @@ export function FormFieldSelect(props: FormFieldSelectProps) {
       name={name}
       render={({ field }) => (
         <FormItem className="w-full flex flex-col">
-          {label && <FormLabel>{label}</FormLabel>}
+          {label && <FormLabel htmlFor={id}>{label}</FormLabel>}
           <Select
             onValueChange={field.onChange}
             value={field.value}
             {...rest}
           >
             <FormControl>
-              <SelectTrigger className="w-full">
+              <SelectTrigger disabled={disabled} id={id} className="w-full">
                 <SelectValue placeholder={placeholder} />
               </SelectTrigger>
             </FormControl>

@@ -6,6 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Calendar, Eye, Mail, Phone } from "lucide-react";
 
 interface Props {
+  id: number;
   name: string;
   email: string;
   phone: string;
@@ -49,7 +50,7 @@ const getRoleBadge = (role: string) => {
 };
 
 export function UserCard(props: Props) {
-  const { name, email, phone, lastLogin, department, role, status } = props;
+  const { id, name, email, phone, lastLogin, department, role, status } = props;
   return (
     <Card className="border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
       <CardContent>
@@ -69,10 +70,7 @@ export function UserCard(props: Props) {
               <p className="text-sm text-slate-600">{department}</p>
             </div>
           </div>
-          {/* <Button variant="ghost" size="icon">
-            <Eye  className="w-4 h-4 text-slate-500" />
-          </Button> */}
-          <InternalLink href={`/users/${name.toLowerCase().replace(" ", "-")}`}>
+          <InternalLink href={`/users/${id}`}>
             <Button variant="ghost" size="icon">
               <Eye className="w-4 h-4 text-slate-500" />
             </Button>

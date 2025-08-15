@@ -16,8 +16,13 @@ import {
 } from "@/components/ui/select";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { useFiltersUser, useFilterUserActions } from "../hooks/use-filter-user";
+import { DepartmentFilter } from "./department-filter";
 
 export function UserFilter() {
+  const filters = useFiltersUser();
+  const actions = useFilterUserActions();
+
   return (
     <Card className="mt-6 shadow-none">
       <CardHeader>
@@ -33,6 +38,7 @@ export function UserFilter() {
             size="sm"
             className="text-slate-600 hover:bg-slate-50"
             type="reset"
+            onClick={() => actions.resetFilter()}
           >
             Limpar Filtros
           </Button>
@@ -40,16 +46,38 @@ export function UserFilter() {
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          {/* TODO - Add debounce and throttle */}
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4" />
             <Input
               placeholder="Buscar usuários..."
               className="pl-10 bg-slate-50 border-slate-200 focus:border-blue-500"
+              value={filters.search ?? ""}
+              onChange={(e) => actions.setSearch(e.target.value)}
             />
           </div>
-
-          <Select>
+          
+          <Select disabled>
             <SelectTrigger className="bg-slate-50 border-slate-200">
+              <SelectValue placeholder="Cargo" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">Todos</SelectItem>
+              <SelectItem value="admin">Admin</SelectItem>
+              <SelectItem value="user">Usuário</SelectItem>
+            </SelectContent>
+          </Select>
+
+          <DepartmentFilter />
+
+          {/* <Select
+            value={filters.departmentId ?? "all"}
+            onValueChange={(value) => actions.setDepartmentId(value)}
+          >
+            <SelectTrigger
+              className="bg-slate-50 border-slate-200"
+              value={filters.departmentId}
+            >
               <SelectValue placeholder="Departamento" />
             </SelectTrigger>
             <SelectContent>
@@ -60,28 +88,19 @@ export function UserFilter() {
               <SelectItem value="marketing">Marketing</SelectItem>
               <SelectItem value="administrativo">Administrativo</SelectItem>
             </SelectContent>
-          </Select>
+          </Select> */}
 
-          <Select>
-            <SelectTrigger className="bg-slate-50 border-slate-200">
-              <SelectValue placeholder="Perfil" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">Todos</SelectItem>
-              <SelectItem value="admin">Atedente</SelectItem>
-              <SelectItem value="analyst">Supervisor</SelectItem>
-              <SelectItem value="user">Admin</SelectItem>
-            </SelectContent>
-          </Select>
-
-          <Select>
+          <Select
+            value={filters.status ?? "all"}
+            onValueChange={(value) => actions.setStatus(value)}
+          >
             <SelectTrigger className="bg-slate-50 border-slate-200">
               <SelectValue placeholder="Status" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">Todos</SelectItem>
-              <SelectItem value="active">Ativo</SelectItem>
-              <SelectItem value="inactive">Inativo</SelectItem>
+              <SelectItem value="true">Ativo</SelectItem>
+              <SelectItem value="false">Inativo</SelectItem>
             </SelectContent>
           </Select>
         </div>

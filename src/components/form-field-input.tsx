@@ -1,4 +1,3 @@
-import type { Control } from "node_modules/react-hook-form/dist/types/form";
 import {
   FormControl,
   FormField,
@@ -7,6 +6,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import type { Control } from "react-hook-form";
 
 interface Props {
   label: string;
@@ -15,10 +15,11 @@ interface Props {
   id: string;
   name: string;
   control: Control<any>;
+  disabled?: boolean;
 }
 
 export function FormFieldInput(props: Props) {
-  const { control, id, name, label, placeholder, required } = props;
+  const { control, id, name, label, placeholder, required, disabled } = props;
   return (
     <FormField
       control={control}
@@ -28,6 +29,7 @@ export function FormFieldInput(props: Props) {
           <FormLabel>{label}</FormLabel>
           <FormControl>
             <Input
+              disabled={disabled}
               id={id}
               placeholder={placeholder}
               required={required}

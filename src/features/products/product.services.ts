@@ -31,3 +31,18 @@ export async function createProduct(product: CreateProductFields) {
     data: product,
   });
 }
+
+export async function fetchProductById(productId: string) {
+  return await Api.fetch<undefined, Product>({
+    endpoint: `/items/${productId}`,
+    method: "GET",
+  });
+}
+
+export async function deleteProduct(productId: string) {
+  return await Api.fetch<undefined, void>({
+    endpoint: `/items/${productId}`,
+    method: "DELETE",
+  });
+}
+
