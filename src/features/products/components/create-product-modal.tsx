@@ -15,7 +15,7 @@ import { FormFieldSelect } from "@/components/form-field-select";
 import { FormFieldSwitch } from "@/components/form-field-switch";
 import { FormFieldTextArea } from "@/components/form-field-text-area";
 import { useCreateProduct } from "../hook/use-create-product";
-import { useFetchCategories } from "../hook/use-fetch-categories";
+import { useFetchCategories } from "@/features/category/hook/use-fetch-categories";
 
 export function CreateProductModal() {
   const {

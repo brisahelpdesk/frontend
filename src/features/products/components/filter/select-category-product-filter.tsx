@@ -6,11 +6,11 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
-import { useFetchCategories } from "../../hook/use-fetch-categories";
 import {
   useProductFilterActions,
   useProductFilters,
 } from "./filter-product-store";
+import { useFetchCategories } from "@/features/category/hook/use-fetch-categories";
 
 export function SelectCategoryProductFilter() {
   const { data } = useFetchCategories();
