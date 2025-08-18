@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router";
+import { createBrowserRouter, RouterProvider } from "react-router";
 import { DashboardPage } from "./features/dashboard/dashboard.page";
 import { MainLayout } from "./layouts/main.layout";
 import { TicketsPage } from "./features/tickets/tickets.page";
@@ -8,43 +8,107 @@ import { SettingsPage } from "./features/settings/settings.page";
 import { TicketDetailsPage } from "./features/tickets/details/ticket-details.page";
 import { AuthLayout } from "./layouts/auth.layout";
 import { UsersPage } from "./features/users/page/users.page";
-import type { ReactNode } from "react";
 import { UserDetailsPage } from "./features/users/page/user-details.page";
 import { ProductsPage } from "./features/products/pages/products.page";
 import { ProductDetailsPage } from "./features/products/pages/product-details.page";
 import { LoginPage } from "./features/auth/pages/login.page";
 import { ActiveUserPage } from "./features/auth/pages/active_user.page";
 
+const router = createBrowserRouter([
+  {
+    path: "/",
+    children: [
+      {
+        path: "app",
+        Component: MainLayout,
+        children: [
+          {
+            index: true,
+            Component: DashboardPage
+          },
+          {
+            path: "tickets",
+            children: [
+              {
+                index: true,
+                Component: TicketsPage
+              },
+              {
+                path: ":ticketId",
+                Component: TicketDetailsPage
+              }
+            ]
+          },
+          {
+            path: "users",
+            children: [
+              {
+                index: true,
+                Component: UsersPage
+              },
+              {
+                path: ":userId",
+                Component: UserDetailsPage
+              }
+            ]
+          },
+          {
+            path: "slas",
+            children: [
+              {
+                index: true,
+                Component: SlasPage
+              }
+            ]
+          },
+          {
+            path: "reports",
+            children: [
+              {
+                index: true,
+                Component: ReportsPage
+              }
+            ]
+          },
+          {
+            path: "products",
+            children: [
+              {
+                index: true,
+                Component: ProductsPage
+              },
+              {
+                path: ":productId",
+                Component: ProductDetailsPage
+              }
+            ]
+          },
+          {
+            path: "settings",
+            Component: SettingsPage
+          }
+        ]
+      },
+      {
+        path: "auth",
+        Component: AuthLayout,
+        children: [
+          {
+            path: "login",
+            Component: LoginPage
+          },
+          {
+            path: "active-user/:userId",
+            Component: ActiveUserPage
+          }
+        ]
+      }
+    ]
+  }
+])
 
-export function Router(): ReactNode {
+export function Router() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/">
-          <Route element={<MainLayout />}>
-            <Route index element={<DashboardPage />} />
-            <Route path="tickets">
-              <Route index element={<TicketsPage />} />
-              <Route path=":ticketId" element={<TicketDetailsPage />} />
-            </Route>
-            <Route path="users">
-              <Route index element={<UsersPage />} />
-              <Route path=":userId" element={<UserDetailsPage />} />
-            </Route>
-            <Route path="slas" element={<SlasPage />} />
-            <Route path="reports" element={<ReportsPage />} />
-            <Route path="products">
-              <Route index element={<ProductsPage />} />
-              <Route path=":productId" element={<ProductDetailsPage />} />
-            </Route>
-            <Route path="settings" element={<SettingsPage />} />
-          </Route>
-          <Route element={<AuthLayout />}>
-            <Route path="login" element={<LoginPage />} />
-            <Route path="active-user/:userId" element={<ActiveUserPage />} />
-          </Route>
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <RouterProvider router={router} />
   );
 }
