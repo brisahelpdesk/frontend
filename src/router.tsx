@@ -12,7 +12,8 @@ import { UserDetailsPage } from "./features/users/page/user-details.page";
 import { ProductsPage } from "./features/products/pages/products.page";
 import { ProductDetailsPage } from "./features/products/pages/product-details.page";
 import { LoginPage } from "./features/auth/pages/login.page";
-import { ActiveUserPage } from "./features/auth/pages/active_user.page";
+import { ActiveUserPage } from "./features/auth/pages/active-user.page";
+
 
 const router = createBrowserRouter([
   {

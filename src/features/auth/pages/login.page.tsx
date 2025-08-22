@@ -1,38 +1,114 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Link } from "react-router";
-import { LoginForm } from "../components/login-form";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { ArrowRight, Mail } from "lucide-react";
+import { useForm } from "react-hook-form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+} from "@/components/ui/form";
+import { FormFieldPassword } from "@/components/input-password";
+
+export interface LoginFormFields {
+  email: string;
+  password: string;
+  remember: boolean;
+}
 
 export function LoginPage() {
+  const form = useForm<LoginFormFields>({
+    defaultValues: {
+      email: "",
+      password: "",
+      remember: true,
+    },
+    mode: "onBlur",
+  });
+
+  const loading = form.formState.isSubmitting;
+
+  async function onSubmit(data: LoginFormFields) {
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    console.log(data);
+  }
+
   return (
     <>
-      <Card className="w-full max-w-md border border-slate-200 shadow-xl bg-white/80 backdrop-blur-sm">
-        <CardHeader className="space-y-1 pb-6">
+      <Card className="w-full max-w-sm border border-slate-200 shadow-xl bg-white/80 backdrop-blur-sm">
+        <CardHeader className="space-y-1">
           <div className="flex items-center justify-center">
-            <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 lg:hidden rounded-xl flex items-center justify-center shadow-lg">
+            <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
               <span className="text-white font-bold text-xl">H</span>
             </div>
           </div>
           <CardTitle className="text-2xl font-bold text-center text-slate-900">
             Fazer Login
           </CardTitle>
-          <p className="text-slate-600 text-center">
+          <p className="text-slate-600 text-sm text-center">
             Entre com suas credenciais para acessar o sistema
           </p>
         </CardHeader>
         <CardContent className="space-y-6">
-          <LoginForm />
+          <Form {...form}>
+            <form
+              method="post"
+              className="space-y-4"
+              onSubmit={form.handleSubmit(onSubmit)}
+            >
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <div className="relative">
+                        <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4" />
+                        <Input
+                          id="email"
+                          type="email"
+                          placeholder="seu@email.com"
+                          className="pl-10 bg-slate-50 border-slate-200 focus:border-blue-500 focus:ring-blue-500 h-11"
+                          required
+                          {...field}
+                        />
+                      </div>
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
 
-          <div className="text-center space-y-2 pt-4 border-t border-slate-200">
-            <p className="text-sm text-slate-600">
-              Não tem uma conta?{" "}
-              <Link
-                to="/register"
-                className="text-blue-600 hover:text-blue-700 hover:underline font-medium"
+              <FormFieldPassword
+                label="Confirmar Senha"
+                placeholder="Confirme sua senha"
+                required
+                id="confirmPassword"
+                name="confirmPassword"
+                control={form.control}
+              />
+
+              <Button
+                type="submit"
+                className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-medium h-11 transition-all duration-200 shadow-lg hover:shadow-xl"
+                disabled={loading}
               >
-                Solicitar Acesso
-              </Link>
-            </p>
-          </div>
+                {loading ? (
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    Entrando...
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-2">
+                    Entrar
+                    <ArrowRight className="w-4 h-4" />
+                  </div>
+                )}
+              </Button>
+            </form>
+          </Form>
         </CardContent>
       </Card>
     </>

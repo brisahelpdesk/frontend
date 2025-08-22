@@ -26,17 +26,17 @@ export function ActiveUserPage() {
 
   return (
     <>
-      <Card className="w-full max-w-md border border-slate-200 shadow-xl bg-white/80 backdrop-blur-sm">
+      <Card className="w-full max-w-sm border border-slate-200 shadow-xl bg-white/80 backdrop-blur-sm">
         <CardHeader className="">
           <div className="flex items-center justify-center">
-            <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
-              <Shield className="w-8 h-8 text-white" />
+            <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
+              <Shield className="w-6 h-6 text-white" />
             </div>
           </div>
           <CardTitle className="text-2xl font-bold text-center text-slate-900">
             Configurar Acesso
           </CardTitle>
-          <p className="text-slate-600 text-center">
+          <p className="text-slate-600 text-center text-sm">
             Olá, {user?.firstName} {user?.lastName}! Conclua seu cadastro
             definindo uma senha forte para proteger sua conta.
           </p>
