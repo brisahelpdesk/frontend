@@ -1,18 +1,18 @@
 import { createBrowserRouter, RouterProvider } from "react-router";
 import { DashboardPage } from "./features/dashboard/dashboard.page";
-import { MainLayout } from "./layouts/main.layout";
+import { MainLayout } from "./layouts/main-layout";
 import { TicketsPage } from "./features/tickets/tickets.page";
 import { SlasPage } from "./features/slas/slas.page";
 import { ReportsPage } from "./features/reports/reports.page";
 import { SettingsPage } from "./features/settings/settings.page";
 import { TicketDetailsPage } from "./features/tickets/details/ticket-details.page";
-import { AuthLayout } from "./layouts/auth.layout";
 import { UsersPage } from "./features/users/page/users.page";
 import { UserDetailsPage } from "./features/users/page/user-details.page";
 import { ProductsPage } from "./features/products/pages/products.page";
 import { ProductDetailsPage } from "./features/products/pages/product-details.page";
 import { LoginPage } from "./features/auth/pages/login.page";
 import { ActiveUserPage } from "./features/auth/pages/active-user.page";
+import { AuthLayout } from "./layouts/auth-layout";
 
 
 const router = createBrowserRouter([

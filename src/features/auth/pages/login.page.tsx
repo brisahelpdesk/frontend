@@ -2,7 +2,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ArrowRight, Mail } from "lucide-react";
-import { useForm } from "react-hook-form";
 import {
   Form,
   FormControl,
@@ -11,29 +10,11 @@ import {
   FormLabel,
 } from "@/components/ui/form";
 import { FormFieldPassword } from "@/components/input-password";
+import { useAuth } from "../hook/use-auth";
 
-export interface LoginFormFields {
-  email: string;
-  password: string;
-  remember: boolean;
-}
 
 export function LoginPage() {
-  const form = useForm<LoginFormFields>({
-    defaultValues: {
-      email: "",
-      password: "",
-      remember: true,
-    },
-    mode: "onBlur",
-  });
-
-  const loading = form.formState.isSubmitting;
-
-  async function onSubmit(data: LoginFormFields) {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    console.log(data);
-  }
+  const { form, login, isLoading } = useAuth();
 
   return (
     <>
@@ -56,7 +37,7 @@ export function LoginPage() {
             <form
               method="post"
               className="space-y-4"
-              onSubmit={form.handleSubmit(onSubmit)}
+              onSubmit={login}
             >
               <FormField
                 control={form.control}
@@ -82,20 +63,20 @@ export function LoginPage() {
               />
 
               <FormFieldPassword
-                label="Confirmar Senha"
-                placeholder="Confirme sua senha"
+                label="Senha"
+                placeholder="Digite sua senha"
                 required
-                id="confirmPassword"
-                name="confirmPassword"
+                id="password"
+                name="password"
                 control={form.control}
               />
 
               <Button
                 type="submit"
                 className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-medium h-11 transition-all duration-200 shadow-lg hover:shadow-xl"
-                disabled={loading}
+                disabled={isLoading}
               >
-                {loading ? (
+                {isLoading ? (
                   <div className="flex items-center gap-2">
                     <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                     Entrando...

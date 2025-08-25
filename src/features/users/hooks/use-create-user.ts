@@ -38,7 +38,6 @@ export function useCreateUser() {
       form.reset();
 
       queryClient.setQueryData(["fetchUsers"], (prevUsers: User[]) => {
-        console.log("Updating users list with new user:", prevUsers, data);
         if (!prevUsers) return [];
         return [...prevUsers, data];
       });

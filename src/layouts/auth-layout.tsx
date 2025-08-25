@@ -7,7 +7,7 @@ export function AuthLayout(): ReactNode {
   const location = useLocation();
 
   if (isAuthenticated) {
-    return <Navigate to="/" state={{ from: location }} replace />;
+    return <Navigate to="/app" state={{ from: location }} replace />;
   }
   
   return (

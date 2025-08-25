@@ -11,14 +11,14 @@ import {
 } from "./ui/dropdown-menu";
 import { Input } from "./ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { AppExitButton } from "./app-exit-button";
 
-export function Header(): React.ReactNode {
+export function AppHeader(): React.ReactNode {
   return (
     <header className="sticky top-0 z-40 bg-white border-b border-slate-200">
       <div className="max-w-7xl mx-auto flex h-16 items-center gap-4 px-6">
         <SidebarTrigger className="text-slate-600 hover:text-slate-900" />
 
-        {/* Search */}
         <div className="flex-1 max-w-md ml-auto">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4" />
@@ -29,7 +29,6 @@ export function Header(): React.ReactNode {
           </div>
         </div>
 
-        {/* Header Actions */}
         <div className="flex items-center gap-3">
           <Button
             variant="ghost"
@@ -66,7 +65,7 @@ export function Header(): React.ReactNode {
               <DropdownMenuItem>Configurações</DropdownMenuItem>
               <DropdownMenuItem>Suporte</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem className="text-red-600">Sair</DropdownMenuItem>
+              <AppExitButton />
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
