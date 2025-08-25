@@ -19,14 +19,10 @@ export const useAuth = () => {
 
   return {
     user: store.user,
-    isAuthenticated: store.isAuthenticated,
+    isAuthenticated: !!store.user && !!store.token,
     isLoading: store.isLoading,
-    
     form,
-    
     login: handleLoginSubmit,
     logout: store.logout,
-    
-    initializeAuth: store.initializeAuth,
   };
 };

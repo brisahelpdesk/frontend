@@ -1,10 +1,10 @@
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
-import { immer } from 'zustand/middleware/immer'
-import { toast } from 'sonner';
-import type { AuthState, LoginCredentials } from './auth-types';
-import type { User } from '../users/user.model';
-import { login } from './auth-services';
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
+import { immer } from "zustand/middleware/immer";
+import { toast } from "sonner";
+import type { AuthState, LoginCredentials } from "./auth-types";
+import type { User } from "../users/user.model";
+import { login } from "./auth-services";
 
 interface AuthActions {
   login: (credentials: LoginCredentials) => Promise<void>;
@@ -12,14 +12,13 @@ interface AuthActions {
   setUser: (user: User) => void;
   setToken: (token: string) => void;
   setLoading: (loading: boolean) => void;
-  initializeAuth: () => void;
 }
 
 export type AuthStore = AuthState & AuthActions;
 
 export const useAuthStore = create<AuthStore>()(
   persist(
-    immer((set, get) => ({
+    immer((set) => ({
       user: null,
       token: null,
       isAuthenticated: false,
@@ -32,7 +31,7 @@ export const useAuthStore = create<AuthStore>()(
           });
 
           const response = await login(credentials);
-          
+
           set((state) => {
             state.user = response.user;
             state.token = response.token;
@@ -45,16 +44,17 @@ export const useAuthStore = create<AuthStore>()(
             duration: 4000,
             richColors: true,
           });
-
         } catch (error) {
           set((state) => {
             state.isLoading = false;
           });
 
-          const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido';
-          
+          const errorMessage =
+            error instanceof Error ? error.message : "Erro desconhecido";
+
           toast.error(`Erro ao fazer login: ${errorMessage}`, {
-            description: "Por favor, verifique suas credenciais e tente novamente.",
+            description:
+              "Por favor, verifique suas credenciais e tente novamente.",
             duration: 4000,
             richColors: true,
           });
@@ -94,22 +94,13 @@ export const useAuthStore = create<AuthStore>()(
           state.isLoading = loading;
         });
       },
-
-      initializeAuth: () => {
-        const { user, token } = get();
-        if (user && token) {
-          set((state) => {
-            state.isAuthenticated = true;
-          });
-        }
-      },
     })),
     {
-      name: 'auth-storage',
+      name: "auth-storage",
       partialize: (state) => ({
         user: state.user,
         token: state.token,
-      }),
+      })
     }
   )
 );
