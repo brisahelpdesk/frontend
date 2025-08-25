@@ -1,8 +1,16 @@
 import { AppHeader } from "@/components/app-header";
 import { AppSidebar } from "@/components/app-sidebar";
-import { Outlet } from "react-router";
+import { useAuth } from "@/features/auth/hook/use-auth";
+import { Navigate, Outlet, useLocation } from "react-router";
 
 export function MainLayout(): React.ReactNode {
+  const { isAuthenticated } = useAuth();
+  const location = useLocation();
+
+  if (!isAuthenticated) {
+    return <Navigate to="/auth/login" state={{ from: location }} replace />;
+  }
+
   return (
     <AppSidebar>
       <div className="flex flex-col w-full">
