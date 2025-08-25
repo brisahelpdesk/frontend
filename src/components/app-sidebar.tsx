@@ -20,16 +20,16 @@ import {
   SidebarMenuItem,
   SidebarProvider,
 } from "./ui/sidebar";
-import { Link, useLocation } from "react-router";
+import { Link } from "react-router";
 import { AppSidebarLink } from "./app-sidebar-link";
 
 const menuItems = [
-  { title: "Dashboard", url: "/", Icon: ChartNoAxesColumn },
-  { title: "Tickets", url: "/tickets", Icon: Ticket },
-  { title: "Usuários", url: "/users", Icon: Users },
-  { title: "SLAs", url: "/slas", Icon: Timer },
-  { title: "Relatórios", url: "/reports", Icon: ChartLine },
-  { title: "Produtos/Serviços", url: "/products", Icon: Package },
+  { title: "Dashboard", url: "/app", Icon: ChartNoAxesColumn },
+  { title: "Tickets", url: "tickets", Icon: Ticket },
+  { title: "Usuários", url: "users", Icon: Users },
+  { title: "SLAs", url: "slas", Icon: Timer },
+  { title: "Relatórios", url: "reports", Icon: ChartLine },
+  { title: "Produtos/Serviços", url: "products", Icon: Package },
 ];
 
 interface AppSidebarProps {
@@ -37,10 +37,7 @@ interface AppSidebarProps {
 }
 
 export function AppSidebar(props: AppSidebarProps): React.ReactNode {
-  const location = useLocation();
-  const currentPath = location.pathname;
-
-  return (
+   return (
     <SidebarProvider>
       <Sidebar>
         <SidebarHeader className="py-3 px-6 border-b border-slate-200">
