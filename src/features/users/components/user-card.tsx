@@ -70,7 +70,7 @@ export function UserCard(props: Props) {
               <p className="text-sm text-slate-600">{department}</p>
             </div>
           </div>
-          <InternalLink href={`/users/${id}`}>
+          <InternalLink href={`${id}`}>
             <Button variant="ghost" size="icon">
               <Eye className="w-4 h-4 text-slate-500" />
             </Button>
