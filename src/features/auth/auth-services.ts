@@ -1,6 +1,7 @@
 import type { LoginCredentials, LoginResponse } from "./auth-types";
 
 export async function login(props: LoginCredentials): Promise<LoginResponse> {
+  console.log(props);
   await new Promise((resolve) => setTimeout(resolve, 1000));
   return {
     token: "fake-token",
@@ -13,9 +14,7 @@ export async function login(props: LoginCredentials): Promise<LoginResponse> {
       department: {
         id: 1,
         name: "IT",
-        description: "Information Technology",
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        description: "Information Technology"
       },
       isActive: true,
       createdAt: new Date().toISOString(),

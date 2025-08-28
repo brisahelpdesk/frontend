@@ -3,7 +3,7 @@ import type { Product } from "../product.model";
 import { fetchProductById } from "../product.services";
 
 export function useFetchProductById(id: string) {
-  const { data, isLoading, error } = useQuery<Product>({
+  const { data, isLoading, error } = useQuery<Product | null>({
     queryKey: ["fetchProductById", id],
     queryFn: () => fetchProductById(id),
   });

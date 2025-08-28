@@ -28,14 +28,12 @@ export function ProductDetailsPage() {
     />;
   }
 
-  const { name, createdAt, updatedAt } = product || {};
-
   return (
     <>
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <AppPageHeader
-          name={name || "Detalhes do Produto"}
-          description={`Data de criação: ${createdAt} e última atualização: ${updatedAt}`}
+          name={product?.name || "Detalhes do Produto"}
+          description={`Data de criação: ${product?.createdAt} e última atualização: ${product?.updatedAt}`}
         />
         <div className="flex gap-2">
           <Button variant="outline">

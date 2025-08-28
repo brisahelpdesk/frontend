@@ -1,4 +1,3 @@
-import { Api } from "@/lib/axios";
 import type { Department } from "./department.model";
 
 const departments: Department[] = [

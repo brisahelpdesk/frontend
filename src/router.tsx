@@ -13,7 +13,9 @@ import { ProductDetailsPage } from "./features/products/pages/product-details.pa
 import { LoginPage } from "./features/auth/pages/login.page";
 import { ActiveUserPage } from "./features/auth/pages/active-user.page";
 import { AuthLayout } from "./layouts/auth-layout";
-
+import { fetchUserById } from "./features/users/user.service";
+import { UserDetailsLoading } from "./features/users/components/user-details-loading";
+import NotFound from "./components/notfound";
 
 const router = createBrowserRouter([
   {
@@ -25,70 +27,80 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            Component: DashboardPage
+            Component: DashboardPage,
           },
           {
             path: "tickets",
             children: [
               {
                 index: true,
-                Component: TicketsPage
+                Component: TicketsPage,
               },
               {
                 path: ":ticketId",
-                Component: TicketDetailsPage
-              }
-            ]
+                Component: TicketDetailsPage,
+              },
+            ],
           },
           {
             path: "users",
             children: [
               {
                 index: true,
-                Component: UsersPage
+                Component: UsersPage,
               },
               {
                 path: ":userId",
-                Component: UserDetailsPage
-              }
-            ]
+                loader: ({ params }) => fetchUserById(params.userId!),
+                hydrateFallbackElement: <UserDetailsLoading />,
+                errorElement: (
+                  <NotFound
+                    title="Usuário não encontrado"
+                    description="O usuário que você tentou acessar não existe, foi removido ou o identificador está incorreto."
+                    linkText="Voltar para Usuários"
+                    linkHref="/app/users"
+                  />
+                ),
+                Component: UserDetailsPage,
+              },
+            ],
           },
           {
             path: "slas",
             children: [
               {
                 index: true,
-                Component: SlasPage
-              }
-            ]
+                Component: SlasPage,
+              },
+            ],
           },
           {
             path: "reports",
             children: [
               {
                 index: true,
-                Component: ReportsPage
-              }
-            ]
+                Component: ReportsPage,
+              },
+            ],
           },
           {
             path: "products",
             children: [
               {
                 index: true,
-                Component: ProductsPage
+                Component: ProductsPage,
               },
               {
                 path: ":productId",
-                Component: ProductDetailsPage
-              }
-            ]
+                Component: ProductDetailsPage,
+              },
+            ],
           },
           {
             path: "settings",
-            Component: SettingsPage
-          }
-        ]
+            Component: SettingsPage,
+          },
+        ],
       },
       {
         path: "auth",
@@ -96,20 +108,18 @@ const router = createBrowserRouter([
         children: [
           {
             path: "login",
-            Component: LoginPage
+            Component: LoginPage,
           },
           {
             path: "active-user/:userId",
-            Component: ActiveUserPage
-          }
-        ]
-      }
-    ]
-  }
-])
+            Component: ActiveUserPage,
+          },
+        ],
+      },
+    ],
+  },
+]);
 
 export function Router() {
-  return (
-    <RouterProvider router={router} />
-  );
+  return <RouterProvider router={router} />;
 }

@@ -102,15 +102,11 @@ export async function fetchUsers(filters: FilterState) {
 
 export async function fetchUserById(userId: string) {
   await new Promise((resolve) => setTimeout(resolve, 1000));
-
-  return users.find((user) => user.id === Number(userId));
+  return users.find((user) => user.id === Number(userId)) || null;
 }
 
 export async function deleteUser(userId: string) {
   await new Promise((resolve) => setTimeout(resolve, 1000));
-
   const index = users.findIndex((user) => user.id === Number(userId));
-  if (index !== -1) {
-    users.splice(index, 1);
-  }
+  if (index !== -1) users.splice(index, 1);
 }

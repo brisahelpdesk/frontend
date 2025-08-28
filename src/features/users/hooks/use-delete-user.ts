@@ -15,7 +15,7 @@ export function useDeleteUser(userId: string) {
         richColors: true,
       });
 
-      navigate("/users");
+      navigate("/app/users");
     },
     onError: () => {
       toast.error("Erro ao excluir usuário", {
