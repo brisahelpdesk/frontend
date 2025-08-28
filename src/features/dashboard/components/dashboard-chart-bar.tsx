@@ -5,7 +5,7 @@ import {
   ChartTooltipContent,
   type ChartConfig,
 } from "@/components/ui/chart";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 
 const chartData = [
@@ -116,15 +116,9 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export function DashboardChartBar() {
-  const [activeChart, setActiveChart] =
+  const [activeChart,] =
     useState<keyof typeof chartConfig>("desktop");
-  const total = useMemo(
-    () => ({
-      desktop: chartData.reduce((acc, curr) => acc + curr.desktop, 0),
-      mobile: chartData.reduce((acc, curr) => acc + curr.mobile, 0),
-    }),
-    []
-  );
+
 
   return (
     <div className="my-6">

@@ -12,7 +12,7 @@ export function UserList() {
           id={user.id}
           name={`${user.firstName} ${user.lastName}`}
           email={user.email}
-          department={user?.Department?.name}
+          department={user?.department?.name}
           status={user.isActive ? "Ativo" : "Inativo"}
           lastLogin={new Date().toLocaleDateString("pt-BR")} 
           phone="(11) 99999-9999"

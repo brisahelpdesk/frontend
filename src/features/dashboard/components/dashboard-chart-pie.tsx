@@ -51,12 +51,11 @@ const chartConfig = {
 
 export function DashboardChartPie() {
   const id = "pie-interactive";
-  const [activeMonth, setActiveMonth] = useState(desktopData[0].month);
+  const [activeMonth,] = useState(desktopData[0].month);
   const activeIndex = useMemo(
     () => desktopData.findIndex((item) => item.month === activeMonth),
     [activeMonth]
   );
-  const months = useMemo(() => desktopData.map((item) => item.month), []);
 
   return (
     <div className="">

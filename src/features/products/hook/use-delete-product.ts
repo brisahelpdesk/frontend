@@ -17,7 +17,7 @@ export function useDeleteProduct(productId: string) {
         description: `O produto foi removido da lista.`,
       });
 
-      navigate("/products", { replace: true });
+      navigate("/app/products", { replace: true });
     },
 
     onError: (error) => {

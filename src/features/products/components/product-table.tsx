@@ -132,7 +132,7 @@ export function ProductTable() {
                       })}
                     </TableCell>
                     <TableCell className="text-right">
-                      <InternalLink href={`/products/${id}`}>
+                      <InternalLink href={`${id}`}>
                         <Button
                           variant="ghost"
                           className="h-8 w-8 p-0"
