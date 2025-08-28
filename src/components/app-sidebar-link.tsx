@@ -14,7 +14,8 @@ export function AppSidebarLink(props: AppSidebarLinkProps): React.ReactNode {
   const currentPath = useLocation().pathname;
 
   const isActiveWithSubpath = (path: string) => {
-    return currentPath === path || currentPath.startsWith(`${path}/`);
+    if(currentPath === path) return true;
+    return currentPath.replace("/app", "").includes(path);
   };
 
   const linkClass = cn(
