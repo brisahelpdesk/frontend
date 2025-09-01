@@ -6,16 +6,16 @@ import { SlasPage } from "./features/slas/slas.page";
 import { ReportsPage } from "./features/reports/reports.page";
 import { SettingsPage } from "./features/settings/settings.page";
 import { TicketDetailsPage } from "./features/tickets/details/ticket-details.page";
-import { UsersPage } from "./features/users/page/users.page";
-import { UserDetailsPage } from "./features/users/page/user-details.page";
 import { ProductsPage } from "./features/products/pages/products.page";
 import { ProductDetailsPage } from "./features/products/pages/product-details.page";
 import { LoginPage } from "./features/auth/pages/login.page";
 import { ActiveUserPage } from "./features/auth/pages/active-user.page";
 import { AuthLayout } from "./layouts/auth-layout";
-import { fetchUserById } from "./features/users/user.service";
-import { UserDetailsLoading } from "./features/users/components/user-details-loading";
 import NotFound from "./components/notfound";
+import { fetchEmployessById } from "./features/employee/employee-services";
+import { EmployeePage } from "./features/employee/page/employees-page";
+import { EmployeeDetailsPage } from "./features/employee/page/employee-details-page";
+import { EmployeeDetailsLoading } from "./features/employee/components/employee-details-loading";
 
 const router = createBrowserRouter([
   {
@@ -47,12 +47,12 @@ const router = createBrowserRouter([
             children: [
               {
                 index: true,
-                Component: UsersPage,
+                Component: EmployeePage,
               },
               {
                 path: ":userId",
-                loader: ({ params }) => fetchUserById(params.userId!),
-                hydrateFallbackElement: <UserDetailsLoading />,
+                loader: ({ params }) => fetchEmployessById(params.userId!),
+                hydrateFallbackElement: <EmployeeDetailsLoading />,
                 errorElement: (
                   <NotFound
                     title="Usuário não encontrado"
@@ -61,7 +61,7 @@ const router = createBrowserRouter([
                     linkHref="/app/users"
                   />
                 ),
-                Component: UserDetailsPage,
+                Component: EmployeeDetailsPage,
               },
             ],
           },

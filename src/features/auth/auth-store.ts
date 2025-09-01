@@ -3,7 +3,7 @@ import { persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 import { toast } from "sonner";
 import type { AuthState, LoginCredentials } from "./auth-types";
-import type { User } from "../users/user.model";
+import type { User } from "../employee/user.model";
 import { login } from "./auth-services";
 
 interface AuthActions {

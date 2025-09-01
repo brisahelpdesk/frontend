@@ -13,22 +13,28 @@ import { Form } from "@/components/ui/form";
 import { Plus } from "lucide-react";
 import { FormFieldSelect } from "@/components/form-field-select";
 import { FormFieldSwitch } from "@/components/form-field-switch";
-import { useCreateUser } from "../hooks/use-create-user";
+import { useCreateEmployee } from "../hooks/use-create-employee";
 
-
-export function CreateUser() {
-  const { form, onSubmit, isPending, departments } = useCreateUser();
+export function CreateEmployee() {
+  const { 
+    form, 
+    onSubmit, 
+    isPending, 
+    departments, 
+    openModal, 
+    setOpenModal 
+  } = useCreateEmployee();
 
   const selectDepartmentItems =
-    departments?.map((department) => ({
-      value: department.id.toString(),
-      label: department.name,
+    departments?.map((dept) => ({
+      value: dept.id.toString(),
+      label: dept.name,
     })) || [];
 
   return (
-    <Dialog>
+    <Dialog open={openModal}>
       <DialogTrigger asChild>
-        <Button className="bg-blue-600 hover:bg-blue-700">
+        <Button className="bg-blue-600 hover:bg-blue-700" onClick={() => setOpenModal(true)}>
           <Plus className="w-4 h-4 mr-2" />
           Novo Usuário
         </Button>
@@ -66,11 +72,11 @@ export function CreateUser() {
             </div>
             <div className="grid grid-cols-2 gap-4 mt-4">
               <FormFieldInput
-                name="document"
-                label="Documento"
+                name="cpf"
+                label="CPF"
                 placeholder="10010010010"
                 control={form.control}
-                id="document"
+                id="cpf"
                 disabled={isPending}
                 required
               />
@@ -111,7 +117,9 @@ export function CreateUser() {
 
             <DialogFooter className="mt-4">
               <div className="flex justify-end gap-2">
-                <Button variant="outline" type="reset">Cancelar</Button>
+                <Button variant="outline" type="reset" onClick={() => setOpenModal(false)} disabled={isPending}>
+                  Cancelar
+                </Button>
                 <Button
                   disabled={isPending}
                   type="submit"

@@ -1,9 +1,9 @@
 import { AppPageHeader } from "@/components/app-page-header";
 import { UserCheck, Users, UserX } from "lucide-react";
 import { Stat } from "@/components/stat";
-import { UserList } from "../components/user-list";
-import { UserFilter } from "../components/user-filter";
-import { CreateUser } from "../components/create-user";
+import { CreateEmployee } from "../components/create-employee";
+import { EmployeeFilter } from "../components/employee-filter";
+import { EmployeeList } from "../components/employee-list";
 
 const statsCards = [
   {
@@ -29,7 +29,7 @@ const statsCards = [
   },
 ];
 
-export function UsersPage() {
+export function EmployeePage() {
   return (
     <>
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
@@ -37,7 +37,7 @@ export function UsersPage() {
           name="Gerenciamento de Usuários"
           description="Visualize e gerencie todos os usuários do sistema"
         />
-        <CreateUser />
+        <CreateEmployee />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
@@ -51,8 +51,8 @@ export function UsersPage() {
         ))}
       </div>
 
-      <UserFilter />
-      <UserList />
+      <EmployeeFilter />
+      <EmployeeList />
     </>
   );
 }

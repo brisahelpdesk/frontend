@@ -2,13 +2,13 @@ import { AppPageHeader } from "@/components/app-page-header";
 import { useLoaderData } from "react-router";
 import { Button } from "@/components/ui/button";
 import { Edit, Trash } from "lucide-react";
-import { useDeleteUser } from "../hooks/use-delete-user";
+import { useDeleteEmployee } from "../hooks/use-delete-employee";
 
 // TODO - Implement user details page with more information
 // TODO - ADD erro notfound
 // TODO - ADD loading state
 
-export function UserDetailsPage() {
+export function EmployeeDetailsPage() {
   const {
     id,
     firstName,
@@ -17,7 +17,7 @@ export function UserDetailsPage() {
     updatedAt,
   } = useLoaderData();
 
-  const { deleteUser } = useDeleteUser(id);
+  const { deleteUser } = useDeleteEmployee(id);
 
   const createdDate = createdAt ? new Date(createdAt).toLocaleDateString() : '';
   const updatedDate = updatedAt ? new Date(updatedAt).toLocaleDateString() : '';

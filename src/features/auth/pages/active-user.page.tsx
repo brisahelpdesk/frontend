@@ -2,7 +2,7 @@ import { FormFieldPassword } from "@/components/input-password";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form } from "@/components/ui/form";
-import { useFetchUserById } from "@/features/users/hooks/use-fetch-user-by-id";
+import { useFetchEmployeeById } from "@/features/employee/hooks/use-fetch-employee-by-id";
 import { Mail, Save, Shield } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router";
@@ -15,7 +15,7 @@ interface FormFields {
 export function ActiveUserPage() {
   const userId = useParams().userId;
 
-  const { user } = useFetchUserById(userId || "");
+  const { user } = useFetchEmployeeById(userId || "");
 
   const form = useForm<FormFields>({
     defaultValues: {
