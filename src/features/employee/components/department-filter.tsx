@@ -5,12 +5,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useFiltersUser, useFilterUserActions } from "../hooks/use-filter-user";
 import { useFetchDepartments } from "@/features/department/hooks/use-fetch-departments";
+import { useFilterEmployeeActions, useFiltersEmployee } from "../hooks/use-filter-employee";
 
 export function DepartmentFilter() {
-  const { departmentId } = useFiltersUser();
-  const { setDepartmentId } = useFilterUserActions();
+  const { departmentId } = useFiltersEmployee();
+  const { setDepartmentId } = useFilterEmployeeActions();
   const { departments } = useFetchDepartments();
 
   return (

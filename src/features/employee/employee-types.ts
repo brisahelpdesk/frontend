@@ -1,12 +1,14 @@
-import type { Department } from "../department/department.model";
+import type { Department } from "../department/department-types";
 
-export interface User {
+export interface Employee {
   id: number;
   firstName: string;
   lastName: string;
-  document: string;
+  cpf: string;
   email: string;
+  password?: string;
   department: Department;
+  isPasswordChanged: boolean;
   isActive: boolean;
   createdAt: string;
   updatedAt: string;

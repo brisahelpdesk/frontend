@@ -1,18 +1,18 @@
 import z from "zod";
 
-const UserFirstName = z
+const EmployeeFirstName = z
   .string()
   .min(2, { message: "Nome deve ter pelo menos 2 caracteres" })
   .max(100, { message: "Nome deve ter no máximo 100 caracteres" });
-const UserLastName = z
+const EmployeeLastName = z
   .string()
   .min(2, { message: "Sobrenome deve ter pelo menos 2 caracteres" })
   .max(100, { message: "Sobrenome deve ter no máximo 100 caracteres" });
-const UserDocument = z
+const EmployeeCpf = z
   .string()
-  .min(11, { message: "Documento deve ter pelo menos 11 caracteres" })
-  .max(14, { message: "Documento deve ter no máximo 14 caracteres" });
-const UserEmail = z
+  .min(11, { message: "CPF deve ter pelo menos 11 caracteres" })
+  .max(14, { message: "CPF deve ter no máximo 14 caracteres" });
+const EmployeeEmail = z
   .email({ message: "E-mail inválido" });
 const DepartmentId = z
   .string()
@@ -21,14 +21,14 @@ const DepartmentId = z
   });
 
 
-export const CreateUserSchema = z.object({
-  firstName: UserFirstName,
-  lastName: UserLastName,
-  document: UserDocument,
-  email: UserEmail,
+export const CreateEmployeeSchema = z.object({
+  firstName: EmployeeFirstName,
+  lastName: EmployeeLastName,
+  cpf: EmployeeCpf,
+  email: EmployeeEmail,
   departmentId: DepartmentId,
   isActive: z.boolean(),
 });
 
 
-export type CreateUserSchemaType = z.infer<typeof CreateUserSchema>;
+export type CreateEmployeeSchemaType = z.infer<typeof CreateEmployeeSchema>;

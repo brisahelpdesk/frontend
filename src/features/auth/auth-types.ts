@@ -1,4 +1,4 @@
-import type { User } from "../users/user.model";
+import type { User } from "../employee/user.model";
 
 export interface LoginCredentials {
   email: string;

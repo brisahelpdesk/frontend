@@ -16,12 +16,12 @@ import {
 } from "@/components/ui/select";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { useFiltersUser, useFilterUserActions } from "../hooks/use-filter-user";
 import { DepartmentFilter } from "./department-filter";
+import { useFilterEmployeeActions, useFiltersEmployee } from "../hooks/use-filter-employee";
 
-export function UserFilter() {
-  const filters = useFiltersUser();
-  const actions = useFilterUserActions();
+export function EmployeeFilter() {
+  const filters = useFiltersEmployee();
+  const actions = useFilterEmployeeActions();
 
   return (
     <Card className="mt-6 shadow-none">

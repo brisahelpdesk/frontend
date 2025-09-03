@@ -1,7 +1,7 @@
 import { AppPageHeader } from "@/components/app-page-header";
-import { CreateTicketModal } from "./components/create-ticket-modal";
-import { TicketFilters } from "./components/ticket-filters";
-import { TicketTable } from "./components/ticket-table";
+import { CreateTicketModal } from "../components/create-ticket-modal";
+import { TicketFilters } from "../components/ticket-filters";
+import { TicketTable } from "../components/ticket-table";
 
 export function TicketsPage() {
   return (

@@ -13,7 +13,7 @@ export interface FilterActions {
   setDepartmentId: (value: string) => void;
 }
 
-export interface FilterUserStore {
+export interface FilterEmployeeStore {
   filter: FilterState;
   actions: FilterActions;
 }
@@ -24,7 +24,7 @@ const initialFilter: Readonly<FilterState> = {
   departmentId: undefined,
 };
 
-const filterUserStore = create<FilterUserStore>((set) => ({
+const filterEmployeeStore = create<FilterEmployeeStore>((set) => ({
   filter: initialFilter,
 
   actions: {
@@ -54,10 +54,10 @@ const filterUserStore = create<FilterUserStore>((set) => ({
   },
 }));
 
-export function useFiltersUser() {
-  return filterUserStore((state) => state.filter);
+export function useFiltersEmployee() {
+  return filterEmployeeStore((state) => state.filter);
 }
 
-export function useFilterUserActions() {
-  return filterUserStore((state) => state.actions);
+export function useFilterEmployeeActions() {
+  return filterEmployeeStore((state) => state.actions);
 }

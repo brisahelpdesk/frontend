@@ -49,7 +49,7 @@ const getRoleBadge = (role: string) => {
   );
 };
 
-export function UserCard(props: Props) {
+export function EmployeeCard(props: Props) {
   const { id, name, email, phone, lastLogin, department, role, status } = props;
   return (
     <Card className="border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
