@@ -1,11 +1,11 @@
 import { createBrowserRouter, RouterProvider } from "react-router";
 import { DashboardPage } from "./features/dashboard/dashboard.page";
 import { MainLayout } from "./layouts/main-layout";
-import { TicketsPage } from "./features/tickets/tickets.page";
+import { TicketsPage } from "./features/tickets/pages/tickets-page";
 import { SlasPage } from "./features/slas/slas.page";
 import { ReportsPage } from "./features/reports/reports.page";
 import { SettingsPage } from "./features/settings/settings.page";
-import { TicketDetailsPage } from "./features/tickets/details/ticket-details.page";
+import { TicketDetailsPage } from "./features/tickets/pages/ticket-details-page";
 import { ProductsPage } from "./features/products/pages/products.page";
 import { ProductDetailsPage } from "./features/products/pages/product-details.page";
 import { LoginPage } from "./features/auth/pages/login.page";

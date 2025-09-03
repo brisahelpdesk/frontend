@@ -31,7 +31,7 @@ export function CreateTicketModal() {
           Novo Ticket
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[600px]">
+      <DialogContent className="h-[calc(100vh-32px)] sm:max-w-[600px]">
         <DialogHeader>
           <DialogTitle className="text-xl">Criar Novo Ticket</DialogTitle>
           <DialogDescription>
@@ -39,7 +39,7 @@ export function CreateTicketModal() {
           </DialogDescription>
         </DialogHeader>
 
-        <div className="space-y-6 py-4">
+        <div className="max-h-full h-full overflow-y-auto space-y-6 py-4">
           <div>
             <div className="space-y-2">
               <Label htmlFor="titulo">Título *</Label>
