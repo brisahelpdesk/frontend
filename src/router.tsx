@@ -16,6 +16,8 @@ import { fetchEmployessById } from "./features/employee/employee-services";
 import { EmployeePage } from "./features/employee/page/employees-page";
 import { EmployeeDetailsPage } from "./features/employee/page/employee-details-page";
 import { EmployeeDetailsLoading } from "./features/employee/components/employee-details-loading";
+import { ClientPortalPage } from "./features/client-portal/pages/client-portal-page";
+import { ClientPortalLayout } from "./layouts/client-portal-layout";
 
 const router = createBrowserRouter([
   {
@@ -99,6 +101,16 @@ const router = createBrowserRouter([
           {
             path: "settings",
             Component: SettingsPage,
+          },
+        ],
+      },
+      {
+        path: "client-portal",
+        Component: ClientPortalLayout,
+        children: [
+          {
+            index: true,
+            Component: ClientPortalPage,
           },
         ],
       },
