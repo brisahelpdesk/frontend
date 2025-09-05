@@ -81,13 +81,13 @@ export function ClientPortalNewTicket() {
             </div>
           </CardContent>
         </Card>
-      </TabsCOn>
+      </TabsContent>
     )
   }
 
   return (
-    <TabsContent className="min-h-screen bg-slate-50">
-      <div className="max-w-7xl w-full">        
+    <TabsContent value="new-ticket" className="min-h-screen bg-slate-50">
+      <div className="max-w-7xl w-full">
         <Card className="w-full border border-slate-200 shadow-sm">
           <CardHeader>
             <CardTitle className="text-xl text-slate-900 flex items-center gap-2">
