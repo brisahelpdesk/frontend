@@ -6,8 +6,6 @@ import { SlasPage } from "./features/slas/slas.page";
 import { ReportsPage } from "./features/reports/reports.page";
 import { SettingsPage } from "./features/settings/settings.page";
 import { TicketDetailsPage } from "./features/tickets/pages/ticket-details-page";
-import { ProductsPage } from "./features/products/pages/products.page";
-import { ProductDetailsPage } from "./features/products/pages/product-details.page";
 import { LoginPage } from "./features/auth/pages/login.page";
 import { ActiveUserPage } from "./features/auth/pages/active-user.page";
 import { AuthLayout } from "./layouts/auth-layout";
@@ -18,6 +16,12 @@ import { EmployeeDetailsPage } from "./features/employee/page/employee-details-p
 import { EmployeeDetailsLoading } from "./features/employee/components/employee-details-loading";
 import { ClientPortalPage } from "./features/client-portal/pages/client-portal-page";
 import { ClientPortalLayout } from "./layouts/client-portal-layout";
+import { ProductsPage } from "./features/products/pages/products-page";
+import { ProductDetailsPage } from "./features/products/pages/product-details-page";
+import { ClientPortalMyTicket } from "./features/client-portal/pages/client-portal-my-tickets";
+import { getClientById } from "./features/client/client-service";
+import { ClientPage } from "./features/client/pages/client-page";
+import { ClientDetailsPage } from "./features/client/pages/client-details-page";
 
 const router = createBrowserRouter([
   {
@@ -45,25 +49,47 @@ const router = createBrowserRouter([
             ],
           },
           {
-            path: "users",
+            path: "employees",
             children: [
               {
                 index: true,
                 Component: EmployeePage,
               },
               {
-                path: ":userId",
-                loader: ({ params }) => fetchEmployessById(params.userId!),
+                path: ":employeeId",
+                loader: ({ params }) => fetchEmployessById(Number(params.employeeId!)),
                 hydrateFallbackElement: <EmployeeDetailsLoading />,
                 errorElement: (
                   <NotFound
-                    title="Usuário não encontrado"
-                    description="O usuário que você tentou acessar não existe, foi removido ou o identificador está incorreto."
-                    linkText="Voltar para Usuários"
-                    linkHref="/app/users"
+                    title="Funcionário não encontrado"
+                    description="O funcionário que você tentou acessar não existe, foi removido ou o identificador está incorreto."
+                    linkText="Voltar para Funcionários"
+                    linkHref="/app/employees"
                   />
                 ),
                 Component: EmployeeDetailsPage,
+              },
+            ],
+          },
+          {
+            path: "clients",
+            children: [
+              {
+                index: true,
+                Component: ClientPage,
+              },
+              {
+                path: ":clientId",
+                loader: ({ params }) => getClientById(Number(params.clientId!)),
+                errorElement: (
+                  <NotFound
+                    title="Cliente não encontrado"
+                    description="O cliente que você tentou acessar não existe, foi removido ou o identificador está incorreto."
+                    linkText="Voltar para Clientes"
+                    linkHref="/app/clients"
+                  />
+                ),
+                Component: ClientDetailsPage,
               },
             ],
           },
@@ -112,6 +138,10 @@ const router = createBrowserRouter([
             index: true,
             Component: ClientPortalPage,
           },
+          {
+            path: "tickets/:ticketId",
+            Component: ClientPortalMyTicket,
+          }
         ],
       },
       {

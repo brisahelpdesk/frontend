@@ -24,7 +24,7 @@ export async function fetchEmployees(filters: FilterState) {
   });
 }
 
-export async function fetchEmployessById(userId: string) {
+export async function fetchEmployessById(userId: number) {
   return Api.fetch<undefined, Employee>({
     method: "GET",
     endpoint: `/employees/${userId}`,

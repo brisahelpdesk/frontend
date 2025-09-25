@@ -2,17 +2,11 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import {
-  CreateProductSchema,
-  type CreateProductFields,
-} from "../product.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import type { Product } from "../product.model";
-import { createProduct } from "../product.services";
 import { useProductFilters } from "../components/filter/filter-product-store";
-
-// TODO: Refatorar para melhorar performance e evitar re-renderizações desnecessárias
-// TODO: Melhorar testabilidade e separação de preocupações
+import { CreateProductSchema, type CreateProductFields } from "../product-schema";
+import { createProduct } from "../product-services";
+import type { Product } from "../product-model";
 
 export function useCreateProduct() {
   const [isModalOpen, setIsModalOpen] = useState(false);

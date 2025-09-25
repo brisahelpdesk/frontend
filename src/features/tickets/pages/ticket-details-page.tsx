@@ -1,110 +1,42 @@
 import { AppPageHeader } from "@/components/app-page-header";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Textarea } from "@/components/ui/textarea";
-import { Badge, MessageSquare, Paperclip, Send } from "lucide-react";
 import { useParams } from "react-router";
-import { Label } from "recharts";
+import { useGetTicketById } from "../hooks/use-get-ticket-by-id";
+import { TicketDetailsClient } from "../components/TicketDetailsClient";
+import { TicketDetailsEmployee } from "../components/TicketDetailsEmployee";
+import { TicketDetailsProduct } from "../components/TicketDetailsProduct";
 
-const ticketsData = [
-  {
-    id: "001",
-    title: "Sistema lento na tela de login",
-    status: "Aberto",
-    priority: "Alta",
-    technician: "João Silva",
-    department: "TI",
-    created: "2024-01-15",
-    updated: "2024-01-16",
-    description:
-      "Usuários relatam lentidão significativa ao fazer login no sistema principal. O problema afeta principalmente o horário de pico (8h-10h).",
-    requester: "Carlos Mendes",
-    category: "Sistema",
-  },
-  {
-    id: "002",
-    title: "Erro ao gerar relatório mensal",
-    status: "Em Andamento",
-    priority: "Média",
-    technician: "Maria Santos",
-    department: "Financeiro",
-    created: "2024-01-14",
-    updated: "2024-01-16",
-    description:
-      "Sistema apresenta erro 500 ao tentar gerar relatório financeiro mensal. Erro ocorre consistentemente.",
-    requester: "Ana Silva",
-    category: "Relatório",
-  },
-  {
-    id: "003",
-    title: "Solicitação de novo usuário",
-    status: "Pendente",
-    priority: "Baixa",
-    technician: "Pedro Costa",
-    department: "RH",
-    created: "2024-01-13",
-    updated: "2024-01-15",
-    description:
-      "Solicitação de criação de novo usuário para funcionário recém-contratado no departamento de vendas.",
-    requester: "Roberto Lima",
-    category: "Acesso",
-  },
-];
-
-const commentsData = [
-  {
-    id: 1,
-    user: "João Silva",
-    avatar: "/placeholder.svg?height=32&width=32",
-    date: "16/01/2024 14:32",
-    content:
-      "Iniciei a análise do problema. Identifiquei que o servidor de aplicação está com alta utilização de CPU durante os horários de pico.",
-    type: "comment",
-  },
-  {
-    id: 2,
-    user: "Sistema",
-    avatar: "/placeholder.svg?height=32&width=32",
-    date: "16/01/2024 15:00",
-    content: "Status alterado de 'Novo' para 'Em Andamento'",
-    type: "system",
-  },
-  {
-    id: 3,
-    user: "Maria Santos",
-    avatar: "/placeholder.svg?height=32&width=32",
-    date: "16/01/2024 15:45",
-    content:
-      "Reiniciei o serviço e estou monitorando o desempenho. Implementei cache temporário para melhorar a performance.",
-    type: "comment",
-  },
-]
 
 const getPriorityBadge = (priority: string) => {
-    const colors = {
-      Crítica: "bg-red-50 text-red-700 border-red-200",
-      Alta: "bg-orange-50 text-orange-700 border-orange-200",
-      Média: "bg-yellow-50 text-yellow-700 border-yellow-200",
-      Baixa: "bg-green-50 text-green-700 border-green-200",
-    }
-    return (
-      <span className={`px-3 py-1 rounded-full text-xs font-medium border ${colors[priority as keyof typeof colors]}`}>
-        {priority}
-      </span>
-    )
-  }
+  const colors = {
+    Crítica: "bg-red-50 text-red-700 border-red-200",
+    Alta: "bg-orange-50 text-orange-700 border-orange-200",
+    Média: "bg-yellow-50 text-yellow-700 border-yellow-200",
+    Baixa: "bg-green-50 text-green-700 border-green-200",
+  };
+  return (
+    <span
+      className={`px-3 py-1 rounded-full text-xs font-medium border ${
+        colors[priority as keyof typeof colors]
+      }`}
+    >
+      {priority}
+    </span>
+  );
+};
 
 export function TicketDetailsPage(): React.ReactNode {
   const params = useParams();
   const ticketId = params.ticketId;
+  const { data } = useGetTicketById(ticketId || "");
 
-  const selectedTicket = ticketsData.find((t) => t.id === ticketId);
+  console.log("TicketDetailsClient props.id:", data);
 
   return (
     <>
       <AppPageHeader
-        name={`#${ticketId} - ${selectedTicket?.title}`}
+        name={`#${ticketId} - ${data?.title}`}
         description={`Detalhes sobre o ticket #${ticketId}`}
       />
       <div className="space-y-6">
@@ -115,27 +47,25 @@ export function TicketDetailsPage(): React.ReactNode {
               Informações do Ticket
             </h3>
             <div className="space-y-3 text-sm">
-              <div className="flex justify-between">
-                <span className="text-slate-600">Solicitante:</span>
-                <span className="text-slate-900 font-medium">
-                  {selectedTicket?.requester}
-                </span>
-              </div>
+              {/* 
               <div className="flex justify-between">
                 <span className="text-slate-600">Categoria:</span>
                 <span className="text-slate-900">
-                  {selectedTicket?.category}
+                  {data?.category || "N/A"}
                 </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-slate-600">Departamento:</span>
                 <span className="text-slate-900">
-                  {selectedTicket?.department}
+                  {data?.department || "N/A"}
                 </span>
-              </div>
+              </div> */}
+              <TicketDetailsClient id={data?.requesterId} />
+              <TicketDetailsEmployee id={data?.responsibleEmployeeId} />
+              <TicketDetailsProduct id={data?.productId} />
               <div className="flex justify-between">
                 <span className="text-slate-600">Prioridade:</span>
-                {getPriorityBadge(selectedTicket?.priority || "Baixa")}
+                {getPriorityBadge(data?.priority || "Baixa")}
               </div>
             </div>
           </div>
@@ -145,14 +75,14 @@ export function TicketDetailsPage(): React.ReactNode {
               Descrição
             </h3>
             <div className="bg-slate-50 p-4 rounded-lg border border-slate-200 text-sm text-slate-700">
-              {selectedTicket?.description}
+              {data?.description}
             </div>
           </div>
         </div>
 
         <Separator />
 
-        {/* Área de Comentários */}
+        {/*}
         <div>
           <h3 className="text-lg font-semibold text-slate-900 mb-4 flex items-center">
             <MessageSquare className="w-5 h-5 mr-2 text-blue-600" />
@@ -199,7 +129,6 @@ export function TicketDetailsPage(): React.ReactNode {
             ))}
           </div>
 
-          {/* Adicionar Comentário */}
           <div className="space-y-3 bg-slate-50 p-4 rounded-lg border border-slate-200">
             <Label
               className="text-sm font-medium text-slate-700"
@@ -227,8 +156,8 @@ export function TicketDetailsPage(): React.ReactNode {
             </div>
           </div>
         </div>
-
         <Separator />
+        */}
 
         {/* Botões de Ação */}
         <div className="flex flex-wrap justify-between gap-3 pt-2">

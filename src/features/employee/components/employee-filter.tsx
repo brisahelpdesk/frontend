@@ -46,11 +46,10 @@ export function EmployeeFilter() {
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          {/* TODO - Add debounce and throttle */}
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4" />
             <Input
-              placeholder="Buscar usuários..."
+              placeholder="Buscar funcionários..."
               className="pl-10 bg-slate-50 border-slate-200 focus:border-blue-500"
               value={filters.search ?? ""}
               onChange={(e) => actions.setSearch(e.target.value)}

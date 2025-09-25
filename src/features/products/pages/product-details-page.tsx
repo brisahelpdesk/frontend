@@ -7,15 +7,11 @@ import { useDeleteProduct } from "../hook/use-delete-product";
 import NotFound from "@/components/notfound";
 import { ProductDetailsLoading } from "../components/product-details-loading";
 
-// TODO - Implement product details page with more information
-// TODO - ADD erro notfound
-// TODO - ADD loading state
 
 export function ProductDetailsPage() {
-  const productId = useParams().productId;
-
-  const { product, isLoading, error } = useFetchProductById(productId || "");
-  const { deleteProduct } = useDeleteProduct(productId || "");
+  const productId = Number(useParams().productId);
+  const { product, isLoading, error } = useFetchProductById(productId);
+  const { deleteProduct } = useDeleteProduct(productId);
 
   if (!productId) return null;
   if (isLoading) return <ProductDetailsLoading />;

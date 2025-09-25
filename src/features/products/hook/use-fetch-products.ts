@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchProducts } from "../product.services";
 import { useProductFilters } from "../components/filter/filter-product-store";
+import { fetchProducts } from "../product-services";
 
 
 export function useFetchProducts() {
@@ -8,7 +8,7 @@ export function useFetchProducts() {
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["products", filters],
-    queryFn: async () => await fetchProducts(filters),
+    queryFn: fetchProducts,
   });
 
   return {

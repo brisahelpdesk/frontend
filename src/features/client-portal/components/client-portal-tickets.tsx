@@ -20,68 +20,13 @@ import {
 } from "@/components/ui/table";
 import { TabsContent } from "@/components/ui/tabs";
 import { Eye, Search, Star } from "lucide-react";
+import { useGetTickets } from "../hooks/use-get-tickets";
+import type { Ticket } from "@/features/tickets/ticket-types";
 
-
-const clientTickets = [
-  {
-    id: "#TK-2024-001",
-    title: "Problema com impressora HP LaserJet",
-    description:
-      "A impressora não está conectando à rede Wi-Fi após a última atualização do sistema.",
-    status: "Em Andamento",
-    priority: "Média",
-    created: "2024-01-15",
-    updated: "2024-01-16",
-    technician: "João Silva",
-    category: "Hardware",
-    equipment: "Impressora HP LaserJet Pro 404n",
-    location: "Escritório - Sala 201",
-  },
-  {
-    id: "#TK-2024-002",
-    title: "Solicitação de novo usuário no sistema",
-    description:
-      "Preciso de acesso ao sistema ERP para o novo funcionário Maria Santos do departamento financeiro.",
-    status: "Aguardando Cliente",
-    priority: "Baixa",
-    created: "2024-01-14",
-    updated: "2024-01-15",
-    technician: "Ana Costa",
-    category: "Acesso",
-    equipment: "Sistema ERP",
-    location: "Matriz",
-  },
-  {
-    id: "#TK-2024-003",
-    title: "Computador lento após atualização",
-    description:
-      "O computador ficou muito lento após a última atualização do Windows. Demora muito para abrir programas.",
-    status: "Resolvido",
-    priority: "Alta",
-    created: "2024-01-10",
-    updated: "2024-01-12",
-    technician: "Pedro Lima",
-    category: "Software",
-    equipment: "Dell OptiPlex 7090",
-    location: "Escritório - Sala 105",
-  },
-  {
-    id: "#TK-2024-004",
-    title: "Erro no sistema de vendas",
-    description:
-      "Sistema apresenta erro 500 ao tentar finalizar vendas. Problema começou hoje pela manhã.",
-    status: "Crítico",
-    priority: "Crítica",
-    created: "2024-01-16",
-    updated: "2024-01-16",
-    technician: "Carlos Santos",
-    category: "Sistema",
-    equipment: "Sistema de Vendas",
-    location: "Loja Centro",
-  },
-];
 
 export function ClientPortalTickets() {
+  const { data } = useGetTickets();
+
   const getStatusBadge = (status: string) => {
     const variants = {
       "Em Andamento": "bg-blue-100 text-blue-800 border-blue-200",
@@ -169,16 +114,16 @@ export function ClientPortalTickets() {
                   <TableHead className="text-slate-700 font-semibold">
                     Criado
                   </TableHead>
-                  <TableHead className="text-slate-700 font-semibold">
+                  {/* <TableHead className="text-slate-700 font-semibold">
                     Técnico
-                  </TableHead>
+                  </TableHead> */}
                   <TableHead className="text-slate-700 font-semibold text-right">
                     Ações
                   </TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {clientTickets.map((ticket) => (
+                {data?.map((ticket: Ticket) => (
                   <TableRow
                     key={ticket.id}
                     className="border-slate-100 hover:bg-slate-50"
@@ -189,14 +134,14 @@ export function ClientPortalTickets() {
                     <TableCell className="text-slate-900 font-medium max-w-xs truncate">
                       {ticket.title}
                     </TableCell>
-                    <TableCell>{getStatusBadge(ticket.status)}</TableCell>
-                    <TableCell>{getPriorityBadge(ticket.priority)}</TableCell>
+                    <TableCell>{getStatusBadge(ticket?.status ?? "Em Andamento")}</TableCell>
+                    <TableCell>{getPriorityBadge(ticket?.priority ?? "Baixa")}</TableCell>
                     <TableCell className="text-slate-600">
-                      {ticket.created}
+                      {ticket.createdAt?.toLocaleDateString("pt-BR")}
                     </TableCell>
-                    <TableCell className="text-slate-600">
+                    {/* <TableCell className="text-slate-600">
                       {ticket.technician}
-                    </TableCell>
+                    </TableCell> */}
                     <TableCell className="text-right">
                       <div className="flex gap-2 justify-end">
                         <Button
@@ -205,8 +150,10 @@ export function ClientPortalTickets() {
                           onClick={console.log}
                           className="text-blue-600 hover:text-blue-700"
                         >
-                          <Eye className="w-4 h-4 mr-1" />
-                          Ver
+                          <InternalLink className="flex gap-1 items-center" href={`/client-portal/tickets/${ticket.id}`}>
+                            <Eye className="w-4 h-4 mr-1" />
+                            Ver
+                          </InternalLink>
                         </Button>
                         {ticket.status === "Resolvido" && (
                           <Button

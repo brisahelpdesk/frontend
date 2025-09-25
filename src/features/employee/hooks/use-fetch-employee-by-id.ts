@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import type { Employee } from "../employee-types";
 import { fetchEmployessById } from "../employee-services";
 
-export function useFetchEmployeeById(userId: string) {
+export function useFetchEmployeeById(userId: number) {
   const { data, isLoading, error } = useQuery<Employee | null>({
     queryKey: ["fetchEmployeeById", userId],
     queryFn: () => fetchEmployessById(userId),

@@ -7,21 +7,21 @@ import { EmployeeList } from "../components/employee-list";
 
 const statsCards = [
   {
-    title: "Total de Usuários",
+    title: "Total de Funcionários",
     value: 156,
     icon: Users,
     color: "from-blue-500 to-blue-600",
     iconBg: "bg-blue-100",
   },
   {
-    title: "Usuários Ativos",
+    title: "Funcionários Ativos",
     value: 142,
     icon: UserCheck,
     color: "from-green-500 to-green-600",
     iconBg: "bg-green-100",
   },
   {
-    title: "Usuários Inativos",
+    title: "Funcionários Inativos",
     value: 14,
     icon: UserX,
     color: "from-red-500 to-red-600",
@@ -34,8 +34,8 @@ export function EmployeePage() {
     <>
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <AppPageHeader
-          name="Gerenciamento de Usuários"
-          description="Visualize e gerencie todos os usuários do sistema"
+          name="Gerenciamento de Funcionários"
+          description="Visualize e gerencie todos os funcionários do sistema"
         />
         <CreateEmployee />
       </div>

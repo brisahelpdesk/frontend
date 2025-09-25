@@ -1,7 +1,7 @@
-import type { Category } from "../category/category.model";
+import type { Category } from "../category/category-types";
 
 export interface Product {
-  id: string;
+  id: number;
   name: string;
   internalId?: string;
   description?: string;

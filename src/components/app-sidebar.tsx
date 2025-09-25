@@ -26,7 +26,8 @@ import { AppSidebarLink } from "./app-sidebar-link";
 const menuItems = [
   { title: "Dashboard", url: "/app", Icon: ChartNoAxesColumn },
   { title: "Tickets", url: "tickets", Icon: Ticket },
-  { title: "Usuários", url: "users", Icon: Users },
+  { title: "Funcionários", url: "employees", Icon: Users },
+  { title: "Clientes", url: "clients", Icon: Users },
   { title: "SLAs", url: "slas", Icon: Timer },
   { title: "Relatórios", url: "reports", Icon: ChartLine },
   { title: "Produtos/Serviços", url: "products", Icon: Package },

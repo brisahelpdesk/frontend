@@ -1,9 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
-import { deleteProduct } from "../product.services";
 import { toast } from "sonner";
 import { useNavigate } from "react-router";
+import { deleteProduct } from "../product-services";
 
-export function useDeleteProduct(productId: string) {
+export function useDeleteProduct(productId: number) {
   const navigate = useNavigate();
 
   const { mutate, isPending } = useMutation({

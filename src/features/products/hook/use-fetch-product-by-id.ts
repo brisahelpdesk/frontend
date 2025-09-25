@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import type { Product } from "../product.model";
-import { fetchProductById } from "../product.services";
+import type { Product } from "../product-model";
+import { fetchProductById } from "../product-services";
 
-export function useFetchProductById(id: string) {
+export function useFetchProductById(id: number) {
   const { data, isLoading, error } = useQuery<Product | null>({
     queryKey: ["fetchProductById", id],
     queryFn: () => fetchProductById(id),
