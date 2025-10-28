@@ -5,7 +5,7 @@ import {
   ChartTooltipContent,
   type ChartConfig,
 } from "@/components/ui/chart";
-import { useMemo, useState } from "react";
+import { useMemo, useState, memo, useCallback } from "react";
 import { Label, Pie, PieChart, Sector } from "recharts";
 import type { PieSectorDataItem } from "recharts/types/polar/Pie";
 
@@ -49,13 +49,54 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export function DashboardChartPie() {
-  const id = "pie-interactive";
-  const [activeMonth,] = useState(desktopData[0].month);
+const id = "pie-interactive";
+
+export const DashboardChartPie = memo(function DashboardChartPie() {
+  const [activeMonth] = useState(desktopData[0].month);
+  
   const activeIndex = useMemo(
     () => desktopData.findIndex((item) => item.month === activeMonth),
     [activeMonth]
   );
+
+  const activeShape = useCallback(({ outerRadius = 0, ...props }: PieSectorDataItem) => (
+    <g>
+      <Sector {...props} outerRadius={outerRadius + 10} />
+      <Sector
+        {...props}
+        outerRadius={outerRadius + 25}
+        innerRadius={outerRadius + 12}
+      />
+    </g>
+  ), []);
+
+  const labelContent = useCallback(({ viewBox }: any) => {
+    if (viewBox && "cx" in viewBox && "cy" in viewBox) {
+      return (
+        <text
+          x={viewBox.cx}
+          y={viewBox.cy}
+          textAnchor="middle"
+          dominantBaseline="middle"
+        >
+          <tspan
+            x={viewBox.cx}
+            y={viewBox.cy}
+            className="fill-foreground text-3xl font-bold"
+          >
+            {desktopData[activeIndex].desktop.toLocaleString()}
+          </tspan>
+          <tspan
+            x={viewBox.cx}
+            y={(viewBox.cy || 0) + 24}
+            className="fill-muted-foreground"
+          >
+            Visitors
+          </tspan>
+        </text>
+      );
+    }
+  }, [activeIndex]);
 
   return (
     <div className="">
@@ -77,50 +118,13 @@ export function DashboardChartPie() {
               innerRadius={60}
               strokeWidth={5}
               activeIndex={activeIndex}
-              activeShape={({ outerRadius = 0, ...props }: PieSectorDataItem) => (
-                <g>
-                  <Sector {...props} outerRadius={outerRadius + 10} />
-                  <Sector
-                    {...props}
-                    outerRadius={outerRadius + 25}
-                    innerRadius={outerRadius + 12}
-                  />
-                </g>
-              )}
+              activeShape={activeShape}
             >
-              <Label
-                content={({ viewBox }) => {
-                  if (viewBox && "cx" in viewBox && "cy" in viewBox) {
-                    return (
-                      <text
-                        x={viewBox.cx}
-                        y={viewBox.cy}
-                        textAnchor="middle"
-                        dominantBaseline="middle"
-                      >
-                        <tspan
-                          x={viewBox.cx}
-                          y={viewBox.cy}
-                          className="fill-foreground text-3xl font-bold"
-                        >
-                          {desktopData[activeIndex].desktop.toLocaleString()}
-                        </tspan>
-                        <tspan
-                          x={viewBox.cx}
-                          y={(viewBox.cy || 0) + 24}
-                          className="fill-muted-foreground"
-                        >
-                          Visitors
-                        </tspan>
-                      </text>
-                    );
-                  }
-                }}
-              />
+              <Label content={labelContent} />
             </Pie>
           </PieChart>
         </ChartContainer>
       </ChartCard>
     </div>
   );
-}
+});

@@ -118,3 +118,22 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Custom scrollbar styles for comments history */
+.comments-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.comments-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 4px;
+}
+
+.comments-scrollbar::-webkit-scrollbar-thumb {
+  background: rgb(203 213 225);
+  border-radius: 4px;
+}
+
+.comments-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgb(148 163 184);
+}

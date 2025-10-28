@@ -1,13 +1,17 @@
-import type { User } from "../employee/user.model";
+import type { Employee as User } from "../employee/employee-types";
 
 export interface LoginCredentials {
-  email: string;
+  username: string;
   password: string;
 }
 
+
 export interface LoginResponse {
-  token: string;
-  user: User;
+  userId: number;
+  name: string;
+  cpf: string;
+  roles: string[];
+  jwt: string;
 }
 
 export interface AuthState {

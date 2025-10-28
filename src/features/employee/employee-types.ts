@@ -12,4 +12,5 @@ export interface Employee {
   isActive: boolean;
   createdAt: string;
   updatedAt: string;
+  roles?: string[]; // Adicionar roles para identificar tipo de usuário
 }

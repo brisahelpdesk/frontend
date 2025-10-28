@@ -10,11 +10,13 @@ import {
   Eye,
   CheckCircle,
 } from "lucide-react";
-import { useGetTickets } from "../hooks/use-get-tickets";
-import type { Ticket } from "@/features/tickets/ticket-types";
+
+import type { Ticket } from "@/features/tickets/ticket.types";
 import { InternalLink } from "@/components/internal-link";
+import { useGetTickets } from "@/features/tickets/hooks/use-get-tickets.hook";
 
 export function ClientPortalOverview() {
+
   const { data } = useGetTickets();
 
   const getStatusBadge = (status: string) => {
@@ -48,6 +50,7 @@ export function ClientPortalOverview() {
         return <Clock className="w-4 h-4 text-slate-600" />;
     }
   };
+
 
   return (
     <TabsContent value="overview" className="space-y-6">
@@ -117,7 +120,6 @@ export function ClientPortalOverview() {
         </Card>
       </div>
 
-      {/* Chamados Recentes */}
       <Card className="border border-slate-200 shadow-sm">
         <CardHeader>
           <CardTitle className="text-xl text-slate-900">
@@ -126,7 +128,7 @@ export function ClientPortalOverview() {
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            {data?.slice(0, 3).map((ticket: Ticket) => (
+            {data?.content.slice(0, 3)?.map((ticket: Ticket) => (
               <div
                 key={ticket.id}
                 className="flex items-center justify-between p-4 bg-slate-50 rounded-lg border border-slate-200"

@@ -14,38 +14,26 @@ import { FormFieldInput } from "@/components/form-field-input";
 import { FormFieldSelect } from "@/components/form-field-select";
 import { FormFieldSwitch } from "@/components/form-field-switch";
 import { FormFieldTextArea } from "@/components/form-field-text-area";
-import { useCreateProduct } from "../hook/use-create-product";
-import { useFetchCategories } from "@/features/category/hook/use-fetch-categories";
+import { useProductsViewModel } from "../hook/use-products-view-model";
 
 export function CreateProductModal() {
   const {
-    isModalOpen,
-    onOpenChange,
-    openModal,
-    closeModal,
-    form,
-    isPending,
-    onSubmit,
-  } = useCreateProduct();
+    isCreateModalOpen,
+    openCreateModal,
+    closeCreateModal,
+    createForm,
+    isCreatingProduct,
+    onSubmitCreateProduct,
+    selectCategoryItems,
+    selectTypeItems,
+  } = useProductsViewModel();
 
-  const { data } = useFetchCategories();
-
-  const selectCategoryItems = data?.map(({ id, name }) => ({
-    value: id.toString(),
-    label: name,
-  })) || [];
-
-  const selectTypeItems = [
-    { value: "PRODUCT", label: "Produto" },
-    { value: "SERVICE", label: "Serviço" },
-  ];
-
-  const loading = isPending || form.formState.isSubmitting;
+  const loading = isCreatingProduct || createForm.formState.isSubmitting;
 
   return (
-    <Dialog open={isModalOpen} onOpenChange={onOpenChange}>
+    <Dialog open={isCreateModalOpen} onOpenChange={openCreateModal}>
       <DialogTrigger asChild>
-        <Button onClick={openModal} className="bg-blue-600 hover:bg-blue-700">
+        <Button onClick={openCreateModal} className="bg-blue-600 hover:bg-blue-700">
           <Plus className="w-4 h-4 mr-2" />
           Novo Produto/Serviço
         </Button>
@@ -58,10 +46,10 @@ export function CreateProductModal() {
           </DialogDescription>
         </DialogHeader>
 
-        <Form {...form}>
-          <form className="space-y-4" onSubmit={onSubmit}>
+        <Form {...createForm}>
+          <form className="space-y-4" onSubmit={onSubmitCreateProduct}>
             <FormFieldInput
-              control={form.control}
+              control={createForm.control}
               id="name"
               name="name"
               label="Nome"
@@ -70,7 +58,7 @@ export function CreateProductModal() {
             />
 
             <FormFieldInput
-              control={form.control}
+              control={createForm.control}
               id="internalId"
               name="internalId"
               label="ID Interno"
@@ -79,7 +67,7 @@ export function CreateProductModal() {
 
             <div className="grid grid-cols-2 gap-4">
               <FormFieldSelect
-                control={form.control}
+                control={createForm.control}
                 name="type"
                 selectItems={selectTypeItems}
                 label="Tipo"
@@ -89,7 +77,7 @@ export function CreateProductModal() {
               />
 
               <FormFieldSelect
-                control={form.control}
+                control={createForm.control}
                 selectItems={selectCategoryItems}
                 name="categoryId"
                 label="Categoria"
@@ -100,7 +88,7 @@ export function CreateProductModal() {
             </div>
 
             <FormFieldTextArea
-              control={form.control}
+              control={createForm.control}
               id="description"
               name="description"
               label="Descrição"
@@ -112,7 +100,7 @@ export function CreateProductModal() {
 
             <div className="grid grid-cols-2 space-x-4">
               <FormFieldSwitch
-                control={form.control}
+                control={createForm.control}
                 id="isActive"
                 name="isActive"
                 label="Ativo"
@@ -120,7 +108,7 @@ export function CreateProductModal() {
               />
 
               <FormFieldSwitch
-                control={form.control}
+                control={createForm.control}
                 id="isPhysical"
                 name="isPhysical"
                 label="Físico"
@@ -133,7 +121,7 @@ export function CreateProductModal() {
               <Button
                 type="reset"
                 variant="outline"
-                onClick={closeModal}
+                onClick={closeCreateModal}
                 disabled={loading}
               >
                 Cancelar

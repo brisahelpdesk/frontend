@@ -2,6 +2,7 @@ import { useNavigate } from "react-router";
 import { useAuthStore } from "../auth-store";
 import type { LoginCredentials } from "../auth-types";
 import { useAuthForm } from "./use-auth-form";
+import { getInitialRoute } from "../auth-utils";
 
 export const useAuth = () => {
   const navigate = useNavigate();
@@ -10,8 +11,10 @@ export const useAuth = () => {
 
   const handleLogin = async (credentials: LoginCredentials) => {
     await store.login(credentials);
-    if (store.isAuthenticated) {
-      navigate("/app");
+    if (store.isAuthenticated && store.user) {
+      // Redirecionar baseado no tipo de usuário
+      const route = getInitialRoute(store.user.roles);
+      navigate(route, { replace: true });
     }
   };
 

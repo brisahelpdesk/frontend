@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchEmployees } from "../employee-services";
+import { fetchEmployees } from "../employee.service";
 import { useFiltersEmployee } from "./use-filter-employee";
 
 export function useFetchEmployees() {

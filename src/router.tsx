@@ -1,35 +1,46 @@
-import { createBrowserRouter, RouterProvider } from "react-router";
-import { DashboardPage } from "./features/dashboard/dashboard.page";
+import { Suspense, lazy } from "react";
 import { MainLayout } from "./layouts/main-layout";
-import { TicketsPage } from "./features/tickets/pages/tickets-page";
-import { SlasPage } from "./features/slas/slas.page";
-import { ReportsPage } from "./features/reports/reports.page";
-import { SettingsPage } from "./features/settings/settings.page";
-import { TicketDetailsPage } from "./features/tickets/pages/ticket-details-page";
-import { LoginPage } from "./features/auth/pages/login.page";
-import { ActiveUserPage } from "./features/auth/pages/active-user.page";
 import { AuthLayout } from "./layouts/auth-layout";
-import NotFound from "./components/notfound";
-import { fetchEmployessById } from "./features/employee/employee-services";
-import { EmployeePage } from "./features/employee/page/employees-page";
-import { EmployeeDetailsPage } from "./features/employee/page/employee-details-page";
-import { EmployeeDetailsLoading } from "./features/employee/components/employee-details-loading";
-import { ClientPortalPage } from "./features/client-portal/pages/client-portal-page";
 import { ClientPortalLayout } from "./layouts/client-portal-layout";
-import { ProductsPage } from "./features/products/pages/products-page";
-import { ProductDetailsPage } from "./features/products/pages/product-details-page";
-import { ClientPortalMyTicket } from "./features/client-portal/pages/client-portal-my-tickets";
-import { getClientById } from "./features/client/client-service";
-import { ClientPage } from "./features/client/pages/client-page";
-import { ClientDetailsPage } from "./features/client/pages/client-details-page";
+import { createBrowserRouter, RouterProvider } from "react-router";
+import { RouterLoadingFallback } from "./components/router-loading-fallback";
+import { ProtectedEmployeeRoute } from "./features/auth/components/protected-employee-route";
+import { ProtectedClientRoute } from "./features/auth/components/protected-client-route";
+import { RootRedirect } from "./features/auth/components/root-redirect";
+
+const DashboardPage = lazy(() => import("./features/dashboard/dashboard.page").then(m => ({ default: m.DashboardPage })));
+const TicketsPage = lazy(() => import("./features/tickets/pages/tickets.page").then(m => ({ default: m.TicketsPage })));
+const SLAsPage = lazy(() => import("./features/slas/pages/slas.page.tsx").then(m => ({ default: m.SLAsPage })));
+const SLADetailsPage = lazy(() => import("./features/slas/pages/sla-details.page.tsx").then(m => ({ default: m.SLADetailsPage })));
+const ReportsPage = lazy(() => import("./features/reports/reports.page").then(m => ({ default: m.ReportsPage })));
+const SettingsPage = lazy(() => import("./features/settings/settings.page").then(m => ({ default: m.SettingsPage })));
+const TicketDetailsPage = lazy(() => import("./features/tickets/pages/ticket-details.page").then(m => ({ default: m.TicketDetailsPage })));
+const LoginPage = lazy(() => import("./features/auth/pages/auth-login.page").then(m => ({ default: m.LoginPage })));
+const ActiveUserPage = lazy(() => import("./features/auth/pages/auth-active-user.page").then(m => ({ default: m.ActiveUserPage })));
+const EmployeePage = lazy(() => import("./features/employee/pages/employees.page").then(m => ({ default: m.EmployeePage })));
+const EmployeeDetailsPage = lazy(() => import("./features/employee/pages/employee-details.page").then(m => ({ default: m.EmployeeDetailsPage })));
+const ClientPortalPage = lazy(() => import("./features/client-portal/pages/client-portal.page").then(m => ({ default: m.ClientPortalPage })));
+const ProductsPage = lazy(() => import("./features/products/pages/products.page").then(m => ({ default: m.ProductsPage })));
+const ProductDetailsPage = lazy(() => import("./features/products/pages/product-details.page").then(m => ({ default: m.ProductDetailsPage })));
+const ClientPortalMyTicket = lazy(() => import("./features/client-portal/pages/client-portal-my-tickets.page").then(m => ({ default: m.ClientPortalMyTicket })));
+const ClientPage = lazy(() => import("./features/client/pages/clients.page").then(m => ({ default: m.ClientPage })));
+const ClientDetailsPage = lazy(() => import("./features/client/pages/client-details.page").then(m => ({ default: m.ClientDetailsPage })));
 
 const router = createBrowserRouter([
   {
     path: "/",
     children: [
       {
+        index: true,
+        Component: RootRedirect, // Redireciona baseado no tipo de usuário
+      },
+      {
         path: "app",
-        Component: MainLayout,
+        element: (
+          <ProtectedEmployeeRoute>
+            <MainLayout />
+          </ProtectedEmployeeRoute>
+        ),
         children: [
           {
             index: true,
@@ -57,16 +68,6 @@ const router = createBrowserRouter([
               },
               {
                 path: ":employeeId",
-                loader: ({ params }) => fetchEmployessById(Number(params.employeeId!)),
-                hydrateFallbackElement: <EmployeeDetailsLoading />,
-                errorElement: (
-                  <NotFound
-                    title="Funcionário não encontrado"
-                    description="O funcionário que você tentou acessar não existe, foi removido ou o identificador está incorreto."
-                    linkText="Voltar para Funcionários"
-                    linkHref="/app/employees"
-                  />
-                ),
                 Component: EmployeeDetailsPage,
               },
             ],
@@ -80,15 +81,6 @@ const router = createBrowserRouter([
               },
               {
                 path: ":clientId",
-                loader: ({ params }) => getClientById(Number(params.clientId!)),
-                errorElement: (
-                  <NotFound
-                    title="Cliente não encontrado"
-                    description="O cliente que você tentou acessar não existe, foi removido ou o identificador está incorreto."
-                    linkText="Voltar para Clientes"
-                    linkHref="/app/clients"
-                  />
-                ),
                 Component: ClientDetailsPage,
               },
             ],
@@ -98,7 +90,11 @@ const router = createBrowserRouter([
             children: [
               {
                 index: true,
-                Component: SlasPage,
+                Component: SLAsPage,
+              },
+              {
+                path: ":slaId",
+                Component: SLADetailsPage,
               },
             ],
           },
@@ -132,7 +128,11 @@ const router = createBrowserRouter([
       },
       {
         path: "client-portal",
-        Component: ClientPortalLayout,
+        element: (
+          <ProtectedClientRoute>
+            <ClientPortalLayout />
+          </ProtectedClientRoute>
+        ),
         children: [
           {
             index: true,
@@ -141,7 +141,7 @@ const router = createBrowserRouter([
           {
             path: "tickets/:ticketId",
             Component: ClientPortalMyTicket,
-          }
+          },
         ],
       },
       {
@@ -163,5 +163,9 @@ const router = createBrowserRouter([
 ]);
 
 export function Router() {
-  return <RouterProvider router={router} />;
+  return (
+    <Suspense fallback={<RouterLoadingFallback />}>
+      <RouterProvider router={router} />
+    </Suspense>
+  );
 }

@@ -20,8 +20,8 @@ import {
 } from "@/components/ui/table";
 import { TabsContent } from "@/components/ui/tabs";
 import { Eye, Search, Star } from "lucide-react";
-import { useGetTickets } from "../hooks/use-get-tickets";
-import type { Ticket } from "@/features/tickets/ticket-types";
+import type { Ticket } from "@/features/tickets/ticket.types";
+import { useGetTickets } from "@/features/tickets/hooks/use-get-tickets.hook";
 
 
 export function ClientPortalTickets() {
@@ -114,16 +114,13 @@ export function ClientPortalTickets() {
                   <TableHead className="text-slate-700 font-semibold">
                     Criado
                   </TableHead>
-                  {/* <TableHead className="text-slate-700 font-semibold">
-                    Técnico
-                  </TableHead> */}
                   <TableHead className="text-slate-700 font-semibold text-right">
                     Ações
                   </TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {data?.map((ticket: Ticket) => (
+                {data?.content?.map((ticket: Ticket) => (
                   <TableRow
                     key={ticket.id}
                     className="border-slate-100 hover:bg-slate-50"
@@ -139,9 +136,6 @@ export function ClientPortalTickets() {
                     <TableCell className="text-slate-600">
                       {ticket.createdAt?.toLocaleDateString("pt-BR")}
                     </TableCell>
-                    {/* <TableCell className="text-slate-600">
-                      {ticket.technician}
-                    </TableCell> */}
                     <TableCell className="text-right">
                       <div className="flex gap-2 justify-end">
                         <Button

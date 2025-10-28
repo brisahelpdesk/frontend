@@ -1,5 +1,5 @@
 import { Api } from "@/lib/axios";
-import type { Ticket } from "../tickets/ticket-types";
+import type { Ticket } from "../tickets/ticket.types";
 
 export async function getClientTickets(): Promise<Ticket[]> {
   return await Api.fetch<null, Ticket[]>({

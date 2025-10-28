@@ -12,8 +12,17 @@ import {
 import { Input } from "./ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { AppExitButton } from "./app-exit-button";
+import { useAuthStore } from "@/features/auth/auth-store";
 
 export function AppHeader(): React.ReactNode {
+  const user = useAuthStore((state) => state.user);
+
+  const getUserInitials = () => {
+    if (!user?.firstName) return "U";
+    const names = user.firstName.split(" ");
+    if (names.length === 1) return names[0].charAt(0).toUpperCase();
+    return (names[0].charAt(0) + names[names.length - 1].charAt(0)).toUpperCase();
+  };
   return (
     <header className="sticky top-0 z-40 bg-white border-b border-slate-200">
       <div className="max-w-7xl mx-auto flex h-16 items-center gap-4 px-6">
@@ -47,14 +56,14 @@ export function AppHeader(): React.ReactNode {
                 <Avatar className="h-8 w-8">
                   <AvatarImage src="/placeholder.svg?height=32&width=32" />
                   <AvatarFallback className="bg-blue-100 text-blue-700">
-                    AD
+                    {getUserInitials()}
                   </AvatarFallback>
                 </Avatar>
                 <div className="text-left hidden sm:block">
                   <p className="text-sm font-medium text-slate-900 leading-3">
-                    Admin User
+                    {user?.firstName || "Usuário"}
                   </p>
-                  <p className="text-xs text-slate-500">admin@helpdesk.com</p>
+                  <p className="text-xs text-slate-500">{user?.email || "Sem email"}</p>
                 </div>
               </Button>
             </DropdownMenuTrigger>

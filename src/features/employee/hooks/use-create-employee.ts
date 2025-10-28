@@ -7,7 +7,7 @@ import {
   CreateEmployeeSchema,
   type CreateEmployeeSchemaType,
 } from "../employee-schema";
-import { createEmployee } from "../employee-services";
+import { createEmployee } from "../employee.service";
 import type { Employee } from "../employee-types";
 import { useState } from "react";
 import { useFiltersEmployee } from "./use-filter-employee";

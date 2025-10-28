@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useNavigate } from "react-router";
-import { deleteEmployees } from "../employee-services";
+import { deleteEmployees } from "../employee.service";
 import type { Employee } from "../employee-types";
 
 export function useDeleteEmployee(userId: number) {

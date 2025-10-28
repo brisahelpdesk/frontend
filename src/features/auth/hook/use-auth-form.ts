@@ -4,7 +4,7 @@ import { z } from 'zod';
 import type { LoginCredentials } from '../auth-types';
 
 const loginSchema = z.object({
-  email: z
+  username: z
     .string()
     .email('Email inválido')
     .min(1, 'Email é obrigatório'),
@@ -17,7 +17,7 @@ export const useAuthForm = () => {
   return useForm<LoginCredentials>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: "",
+      username: "",
       password: "",
     },
     mode: "onBlur",

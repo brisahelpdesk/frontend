@@ -16,7 +16,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Eye, Package } from "lucide-react";
-import { useFetchProducts } from "../hook/use-fetch-products";
+import { useProductsViewModel } from "../hook/use-products-view-model";
 import { InternalLink } from "@/components/internal-link";
 
 const getTypeBadge = (type: string) => {
@@ -38,9 +38,9 @@ const getTypeBadge = (type: string) => {
 };
 
 export function ProductTable() {
-  const { data } = useFetchProducts();
+  const { products } = useProductsViewModel();
 
-  if (data?.length === 0)
+  if (products?.length === 0)
     return (
       <Card className="mt-6 shadow-none">
         <CardHeader>
@@ -82,7 +82,7 @@ export function ProductTable() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {data?.map((product) => {
+              {products?.map((product) => {
                 const { id, name, description, type, isActive, createdAt } =
                   product;
 
