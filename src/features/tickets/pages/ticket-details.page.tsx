@@ -7,16 +7,19 @@ import { TicketDetailsClient } from "../components/ticket-details-client.compone
 import { TicketDetailsEmployee } from "../components/ticket-details-employee.component";
 import { TicketDetailsProduct } from "../components/ticket-details-product.component";
 import { TicketComments } from "../components/ticket-comments.components";
+import { AssignTicketModal } from "../components/assign-ticket-modal.component";
+import { CloseTicketModal } from "../components/close-ticket-modal.component";
 
 export function TicketDetailsPage(): React.ReactNode {
   const params = useParams();
   const ticketId = params.ticketId;
   const { data } = useGetTicketById(ticketId || "");
+  const isClosed = !!(data as any)?.closedAt;
 
   return (
     <>
       <AppPageHeader
-        name={`#${ticketId} - ${data?.title}`}
+        name={`#${ticketId} - ${data?.title} - ${data?.status === 'resolved' && '(Fechado)' }`}
         description={`Detalhes sobre o ticket #${ticketId}`}
       />
       <div className="space-y-6 d">
@@ -75,23 +78,16 @@ export function TicketDetailsPage(): React.ReactNode {
 
         <div className="flex flex-wrap justify-between gap-3 pt-2">
           <div className="flex gap-2">
-            <Button variant="outline" className="border-slate-200">
-              Atribuir Técnico
-            </Button>
-            <Button variant="outline" className="border-slate-200">
+            <AssignTicketModal ticketId={ticketId} currentResponsibleId={data?.responsibleEmployeeId} disabled={isClosed} />
+            <Button variant="outline" className="border-slate-200" disabled={isClosed}>
               Alterar Status
             </Button>
-            <Button variant="outline" className="border-slate-200">
+            <Button variant="outline" className="border-slate-200" disabled={isClosed}>
               Alterar Prioridade
             </Button>
           </div>
           <div className="flex gap-2">
-            <Button
-              variant="outline"
-              className="border-red-200 text-red-600 hover:bg-red-50"
-            >
-              Fechar Ticket
-            </Button>
+            <CloseTicketModal ticketId={ticketId} disabled={isClosed} />
           </div>
         </div>
       </div>

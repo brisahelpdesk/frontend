@@ -21,3 +21,25 @@ export async function getTicketById(ticketId: string): Promise<Ticket> {
     data: null
   });
 }
+  
+export async function assignTicket(ticketId: string, employeeId: number): Promise<Ticket> {
+  return await Api.fetch<{ employeeId: number }, Ticket>({
+    endpoint: `/tickets/${ticketId}/assign`,
+    method: 'POST',
+    data: { employeeId }
+  });
+}
+
+export type CloseTicketPayload = {
+  closedById: number;
+  status: string;
+  closedAt: string;
+};
+
+export async function closeTicket(ticketId: string, data: CloseTicketPayload): Promise<Ticket> {
+  return await Api.fetch<CloseTicketPayload, Ticket>({
+    endpoint: `/tickets/${ticketId}/close`,
+    method: 'POST',
+    data,
+  });
+}
