@@ -7,9 +7,11 @@ interface SocketConfig {
   onError: (error: any) => void;
 }
 
+const SOCKET_URL = import.meta.env.VITE_SOCKET_URL;
+
 export function socketClient(config: SocketConfig) {
   const stompClient = new Client({
-    brokerURL: "ws://localhost:8080/ws",
+    brokerURL: SOCKET_URL,
     connectHeaders: {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
       ...config.headers,
