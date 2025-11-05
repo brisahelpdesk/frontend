@@ -1,9 +1,7 @@
 export function isClient(roles?: string[]): boolean {
   if (!roles || roles.length === 0) return false;
   return roles.some(role => 
-    role.toLowerCase() === 'client' || 
-    role.toLowerCase() === 'cliente' ||
-    role.toLowerCase() === 'role_client'
+    role.toLowerCase() === 'client' 
   );
 }
 
@@ -12,12 +10,8 @@ export function isClient(roles?: string[]): boolean {
 export function isEmployee(roles?: string[]): boolean {
   if (!roles || roles.length === 0) return false;
   return roles.some(role => 
-    role.toLowerCase() === 'employee' || 
-    role.toLowerCase() === 'funcionario' ||
     role.toLowerCase() === 'admin' ||
-    role.toLowerCase() === 'tecnico' ||
-    role.toLowerCase() === 'role_employee' ||
-    role.toLowerCase() === 'role_admin' ||
+    role.toLowerCase() === 'user' ||
     role.toLowerCase() === 'supervisor'
   );
 }

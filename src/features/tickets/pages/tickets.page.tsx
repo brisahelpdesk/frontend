@@ -1,6 +1,6 @@
 import { AppPageHeader } from "@/components/app-page-header";
-import { TicketFilters } from "../components/ticket-filters.component";
 import { TicketTable } from "../components/ticket-table.component";
+import { CreateTicketModal } from "../components/create-ticket-modal.component";
 
 export function TicketsPage() {
   return (
@@ -10,9 +10,8 @@ export function TicketsPage() {
           name="Tickets"
           description="Visualize e gerencie todos os tickets do sistema"
         />
-        {/* <CreateTicketModal /> */}
+        <CreateTicketModal />
       </div>
-      <TicketFilters />
       <TicketTable />
     </>
   );

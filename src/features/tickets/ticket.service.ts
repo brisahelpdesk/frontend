@@ -43,3 +43,28 @@ export async function closeTicket(ticketId: string, data: CloseTicketPayload): P
     data,
   });
 }
+
+export type CreateTicketPayload = {
+  title: string;
+  productId: number;
+  requestId?: number;
+  slaId: number;
+  description: string;
+  priority?: string;
+  dueDate?: Date;
+  status?: string;
+};
+
+export async function createTicket(data: CreateTicketPayload): Promise<Ticket> {
+  console.log('Creating ticket with data:', data);
+  return await Api.fetch<CreateTicketPayload, Ticket>({
+    endpoint: `/tickets`,
+    method: 'POST',
+    data: {
+      ...data,
+      priority: "alta",
+      dueDate: new Date(),
+      status: "aberto"
+    }
+  });
+}

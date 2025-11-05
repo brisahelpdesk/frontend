@@ -18,8 +18,6 @@ export function ClientPortalNewTicket() {
     isLoading,
   } = useCreateTicketByClient();
 
-  console.log(form.formState.errors);
-
   return (
     <TabsContent value="new-ticket" className="min-h-screen bg-slate-50">
       <div className="max-w-7xl w-full">

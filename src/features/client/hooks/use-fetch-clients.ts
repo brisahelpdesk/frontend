@@ -7,8 +7,6 @@ export function useFetchClients() {
     queryFn: () => fetchClients(),
   });
 
-  console.log("Fetched clients:", data);
-
   return {
     clients: data,
     isLoading,

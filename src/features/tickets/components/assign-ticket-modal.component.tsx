@@ -27,7 +27,7 @@ export const AssignTicketModal = memo(function AssignTicketModal({ ticketId, cur
   const handleSubmit = (e?: React.FormEvent) => {
     e?.preventDefault();
 
-    if (!selected) {
+    if (!selected || selected === "none") {
       toast.error("Selecione um técnico");
       return;
     }
@@ -71,7 +71,7 @@ export const AssignTicketModal = memo(function AssignTicketModal({ ticketId, cur
                     <SelectItem value={String(u.id)} key={u.id}>{u.name || u.username || `#${u.id}`}</SelectItem>
                   ))
                 ) : (
-                  <SelectItem value="">Nenhum técnico encontrado</SelectItem>
+                  <SelectItem value="none">Nenhum técnico encontrado</SelectItem>
                 )}
               </SelectContent>
             </Select>

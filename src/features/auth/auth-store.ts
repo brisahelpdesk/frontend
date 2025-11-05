@@ -33,7 +33,6 @@ export const useAuthStore = create<AuthStore>()(
 
           const response = await login(credentials);
 
-          // Validar se o usuário possui roles válidas
           if (!response.roles || response.roles.length === 0) {
             set((state) => {
               state.isLoading = false;
@@ -48,8 +47,8 @@ export const useAuthStore = create<AuthStore>()(
             throw new Error("Usuário sem roles válidas");
           }
 
-          // Validar se o tipo de usuário é reconhecido
           const userType = getUserType(response.roles);
+          
           if (userType === 'unknown') {
             set((state) => {
               state.isLoading = false;

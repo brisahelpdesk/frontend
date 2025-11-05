@@ -32,7 +32,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        Component: RootRedirect, // Redireciona baseado no tipo de usuário
+        Component: RootRedirect, 
       },
       {
         path: "app",

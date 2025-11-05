@@ -23,7 +23,6 @@ import { Eye, Search, Star } from "lucide-react";
 import type { Ticket } from "@/features/tickets/ticket.types";
 import { useGetTickets } from "@/features/tickets/hooks/use-get-tickets.hook";
 
-
 export function ClientPortalTickets() {
   const { data } = useGetTickets();
 
@@ -131,11 +130,21 @@ export function ClientPortalTickets() {
                     <TableCell className="text-slate-900 font-medium max-w-xs truncate">
                       {ticket.title}
                     </TableCell>
-                    <TableCell>{getStatusBadge(ticket?.status ?? "Em Andamento")}</TableCell>
-                    <TableCell>{getPriorityBadge(ticket?.priority ?? "Baixa")}</TableCell>
-                    <TableCell className="text-slate-600">
-                      {ticket.createdAt?.toLocaleDateString("pt-BR")}
+                    <TableCell>
+                      {getStatusBadge(ticket?.status ?? "Em Andamento")}
                     </TableCell>
+                    <TableCell>
+                      {getPriorityBadge(ticket?.priority ?? "Baixa")}
+                    </TableCell>
+                    {ticket.createdAt && (
+                      <TableCell className="text-slate-600">
+                        {new Date(ticket.createdAt).toLocaleDateString("pt-BR", {
+                          day: "2-digit",
+                          month: "2-digit",
+                          year: "2-digit",
+                        })}
+                      </TableCell>
+                    )}
                     <TableCell className="text-right">
                       <div className="flex gap-2 justify-end">
                         <Button
@@ -144,7 +153,10 @@ export function ClientPortalTickets() {
                           onClick={console.log}
                           className="text-blue-600 hover:text-blue-700"
                         >
-                          <InternalLink className="flex gap-1 items-center" href={`/client-portal/tickets/${ticket.id}`}>
+                          <InternalLink
+                            className="flex gap-1 items-center"
+                            href={`/client-portal/tickets/${ticket.id}`}
+                          >
                             <Eye className="w-4 h-4 mr-1" />
                             Ver
                           </InternalLink>
