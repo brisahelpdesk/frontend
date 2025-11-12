@@ -1,8 +1,5 @@
 import { AppPageHeader } from "@/components/app-page-header";
-import { UserCheck, Users, UserX } from "lucide-react";
-import { Stat } from "@/components/stat";
 import { CreateEmployee } from "../components/create-employee.component";
-import { EmployeeFilter } from "../components/employee-filter.component";
 import { EmployeeList } from "../components/employee-list.component";
 
 // const statsCards = [
