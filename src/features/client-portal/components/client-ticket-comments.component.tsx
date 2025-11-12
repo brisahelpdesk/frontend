@@ -43,7 +43,7 @@ export const ClientTicketComments = memo(function ClientTicketComments(props: Pr
     }
 
     const stompClient = new Client({
-      webSocketFactory: () => new WebSocket(process.env.VITE_SOCKET_URL || "ws://localhost:8080/ws"),
+      webSocketFactory: () => new WebSocket(process.env.VITE_SOCKET_URL!),
 
       connectHeaders: {
         Authorization: `Bearer ${token}`,

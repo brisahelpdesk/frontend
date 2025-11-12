@@ -19,7 +19,7 @@ export function TicketDetailsPage(): React.ReactNode {
   return (
     <>
       <AppPageHeader
-        name={`#${ticketId} - ${data?.title} - ${data?.status === 'resolved' && '(Fechado)' }`}
+        name={`#${ticketId} - ${data?.title} ${data?.status === '- resolved' ? '(Fechado)' : ''}`}
         description={`Detalhes sobre o ticket #${ticketId}`}
       />
       <div className="space-y-6 d">
