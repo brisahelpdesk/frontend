@@ -23,6 +23,8 @@ interface Comment {
   };
 }
 
+const URL_SOCKET = import.meta.env.VITE_SOCKET_URL;
+
 export const ClientTicketComments = memo(function ClientTicketComments(props: Props) {
   const [client, setClient] = useState<Client | null>(null);
   const queryClient = useQueryClient();
@@ -43,7 +45,7 @@ export const ClientTicketComments = memo(function ClientTicketComments(props: Pr
     }
 
     const stompClient = new Client({
-      webSocketFactory: () => new WebSocket(process.env.VITE_SOCKET_URL!),
+      webSocketFactory: () => new WebSocket(URL_SOCKET),
 
       connectHeaders: {
         Authorization: `Bearer ${token}`,
