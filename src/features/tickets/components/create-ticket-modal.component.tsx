@@ -74,7 +74,7 @@ export function CreateTicketModal() {
 
               <FormFieldSelect
                 control={form.control}
-                name="requestId"
+                name="requesterId"
               label="Cliente"
               selectItems={[
                 ...((clients?.content || []) as any[]).map((c) => ({

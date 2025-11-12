@@ -40,6 +40,7 @@ const getTypeBadge = (type: string) => {
 export function ProductTable() {
   const { products } = useProductsViewModel();
 
+
   if (products?.length === 0)
     return (
       <Card className="mt-6 shadow-none">

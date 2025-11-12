@@ -94,12 +94,12 @@ export const SLAList = memo(function SLAList() {
                   </TableCell>
                   <TableCell className="text-center">
                     <Badge variant="outline" className="text-blue-700 border-blue-200">
-                      {sla.responseTime}h
+                      {sla.responseTime / 60 }min
                     </Badge>
                   </TableCell>
                   <TableCell className="text-center">
                     <Badge variant="outline" className="text-orange-700 border-orange-200">
-                      {sla.resolutionTime}h
+                      {sla.resolutionTime / 60 }min
                     </Badge>
                   </TableCell>
                   <TableCell className="text-center">{sla.statusBadge}</TableCell>

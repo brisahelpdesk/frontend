@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CreateSLASchema, type CreateSLAFields } from "../models/sla.schema";
 import { createSLA } from "../services/sla.service";
 import type { SLA } from "../models/sla.types";
+import type { AxiosError } from "axios";
 
 export function useCreateSLA() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -43,7 +44,7 @@ export function useCreateSLA() {
       form.reset();
       setIsModalOpen(false);
     },
-    onError: (error: any) => {
+    onError: (error: AxiosError<{ message: string }>) => {
       toast.error(`Erro ao criar SLA: ${error.response?.data?.message || error.message}`, {
         richColors: true,
         description: "Por favor, verifique os dados e tente novamente.",
@@ -52,7 +53,13 @@ export function useCreateSLA() {
   });
 
   const onSubmit = useCallback((data: CreateSLAFields) => {
-    mutate(data);
+    mutate({
+      name: data.name,
+      description: data.description,
+      responseTime: data.responseTime * 60,
+      resolutionTime: data.resolutionTime * 60,
+      isActive: data.isActive,
+    });
   }, [mutate]);
 
   const openModal = useCallback(() => setIsModalOpen(true), []);
@@ -61,13 +68,10 @@ export function useCreateSLA() {
     form.reset();
   }, [form]);
 
-  const handleSubmit = useCallback(() => {
-    form.handleSubmit(onSubmit)();
-  }, [form, onSubmit]);
 
   return {
     form,
-    onSubmit: handleSubmit,
+    onSubmit,
     isSubmitting: isPending,
     isModalOpen,
     openModal,

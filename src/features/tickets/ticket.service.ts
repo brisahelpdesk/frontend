@@ -47,7 +47,7 @@ export async function closeTicket(ticketId: string, data: CloseTicketPayload): P
 export type CreateTicketPayload = {
   title: string;
   productId: number;
-  requestId?: number;
+  requesterId?: number;
   slaId: number;
   description: string;
   priority?: string;

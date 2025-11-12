@@ -1,7 +1,5 @@
 import { AppPageHeader } from "@/components/app-page-header";
 import { CreateProductModal } from "../components/create-product-modal";
-import { ProductStatsList } from "../components/product-stats-list";
-import { ProductFilter } from "../components/filter/product-filter";
 import { ProductTable } from "../components/product-table";
 import { ProductsProvider } from "../components/products-provider";
 
@@ -15,8 +13,8 @@ export function ProductsPage() {
         />
         <CreateProductModal />
       </div>
-      <ProductStatsList />
-      <ProductFilter />
+      {/* <ProductStatsList /> */}
+      {/* <ProductFilter /> */}
       <ProductTable />
     </ProductsProvider>
   );

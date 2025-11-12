@@ -27,7 +27,7 @@ export const CreateSLAModal = memo(function CreateSLAModal() {
           </DialogDescription>
         </DialogHeader>
 
-        <form onSubmit={onSubmit} className="space-y-6">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <div className="space-y-2">
             <Label htmlFor="name">Nome *</Label>
             <Input
@@ -56,12 +56,11 @@ export const CreateSLAModal = memo(function CreateSLAModal() {
 
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="responseTime">Tempo Resposta (horas) *</Label>
+              <Label htmlFor="responseTime">Tempo Resposta (min) *</Label>
               <Input
                 id="responseTime"
                 type="number"
                 min="1"
-                max="999"
                 placeholder="1"
                 className="bg-slate-50 border-slate-200 focus:border-blue-500"
                 {...form.register("responseTime", { valueAsNumber: true })}
@@ -72,12 +71,11 @@ export const CreateSLAModal = memo(function CreateSLAModal() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="resolutionTime">Tempo Resolução (horas) *</Label>
+              <Label htmlFor="resolutionTime">Tempo Resolução (min) *</Label>
               <Input
                 id="resolutionTime"
                 type="number"
                 min="1"
-                max="999"
                 placeholder="24"
                 className="bg-slate-50 border-slate-200 focus:border-blue-500"
                 {...form.register("resolutionTime", { valueAsNumber: true })}

@@ -5,29 +5,29 @@ import { CreateEmployee } from "../components/create-employee.component";
 import { EmployeeFilter } from "../components/employee-filter.component";
 import { EmployeeList } from "../components/employee-list.component";
 
-const statsCards = [
-  {
-    title: "Total de Funcionários",
-    value: 156,
-    icon: Users,
-    color: "from-blue-500 to-blue-600",
-    iconBg: "bg-blue-100",
-  },
-  {
-    title: "Funcionários Ativos",
-    value: 142,
-    icon: UserCheck,
-    color: "from-green-500 to-green-600",
-    iconBg: "bg-green-100",
-  },
-  {
-    title: "Funcionários Inativos",
-    value: 14,
-    icon: UserX,
-    color: "from-red-500 to-red-600",
-    iconBg: "bg-red-100",
-  },
-];
+// const statsCards = [
+//   {
+//     title: "Total de Funcionários",
+//     value: 156,
+//     icon: Users,
+//     color: "from-blue-500 to-blue-600",
+//     iconBg: "bg-blue-100",
+//   },
+//   {
+//     title: "Funcionários Ativos",
+//     value: 142,
+//     icon: UserCheck,
+//     color: "from-green-500 to-green-600",
+//     iconBg: "bg-green-100",
+//   },
+//   {
+//     title: "Funcionários Inativos",
+//     value: 14,
+//     icon: UserX,
+//     color: "from-red-500 to-red-600",
+//     iconBg: "bg-red-100",
+//   },
+// ];
 
 export function EmployeePage() {
   return (
@@ -40,7 +40,7 @@ export function EmployeePage() {
         <CreateEmployee />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+      {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
         {statsCards.map((card, index) => (
           <Stat
             key={index}
@@ -49,9 +49,9 @@ export function EmployeePage() {
             icon={card.icon}
           />
         ))}
-      </div>
+      </div> */}
 
-      <EmployeeFilter />
+      {/* <EmployeeFilter /> */}
       <EmployeeList />
     </>
   );

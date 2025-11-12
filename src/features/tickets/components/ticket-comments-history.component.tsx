@@ -25,7 +25,6 @@ export const TicketCommentsHistory = memo(function TicketCommentsHistory(props: 
   const lastCommentRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Ordenar comentários por data (mais antigos primeiro)
   const sortedComments = useMemo(() => {
     return [...props.comments].sort((a, b) => {
       const dateA = new Date(a.timestamp).getTime();
@@ -34,7 +33,7 @@ export const TicketCommentsHistory = memo(function TicketCommentsHistory(props: 
     });
   }, [props.comments]);
 
-  // Scroll automático para o último comentário quando houver novos comentários
+
   useEffect(() => {
     if (containerRef.current) {
       containerRef.current.scrollTop = containerRef.current.scrollHeight;
