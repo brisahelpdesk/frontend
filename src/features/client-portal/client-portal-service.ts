@@ -3,12 +3,11 @@ import type { Ticket } from "../tickets/ticket.types";
 
 export async function getClientTickets(): Promise<Ticket[]> {
   return await Api.fetch<null, Ticket[]>({
-    endpoint: '/tickets',
-    method: 'GET',
-    data: null
+    endpoint: "/tickets",
+    method: "GET",
+    data: null,
   });
 }
-
 
 interface CreateClientTicketData {
   title: string;
@@ -17,18 +16,19 @@ interface CreateClientTicketData {
 }
 
 export async function createClientTicket(data: CreateClientTicketData) {
+  console.log("Submitting ticket data:", data);
+
   return await Api.fetch<CreateClientTicketData, Ticket>({
-    endpoint: '/tickets/open',
-    method: 'POST',
-    data
+    endpoint: "/tickets/open",
+    method: "POST",
+    data,
   });
 }
-
 
 export async function getClientTicketById(ticketId: string): Promise<Ticket> {
   return await Api.fetch<null, Ticket>({
     endpoint: `/tickets/${ticketId}`,
-    method: 'GET',
-    data: null
+    method: "GET",
+    data: null,
   });
 }

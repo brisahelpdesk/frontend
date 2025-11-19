@@ -31,6 +31,8 @@ const getStatusBadge = (status: boolean) => {
 
 export function ClientCard(props: Props) {
   const { userId, name, email, phone, address, status, createdAt } = props;
+
+  const splitedName = name.split(" ");
   
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString("pt-BR");
@@ -44,10 +46,7 @@ export function ClientCard(props: Props) {
             <Avatar className="h-12 w-12">
               <AvatarImage src={"/placeholder.svg"} />
               <AvatarFallback className="bg-slate-200 text-slate-700 font-medium">
-                {name
-                  .split(" ")
-                  .map((n) => n[0])
-                  .join("")}
+                {splitedName[0][0] + splitedName[splitedName.length - 1][0]}
               </AvatarFallback>
             </Avatar>
             <div>
@@ -69,11 +68,11 @@ export function ClientCard(props: Props) {
           </div>
           <div className="flex items-center gap-2 text-slate-600">
             <Phone className="w-4 h-4" />
-            <span>{phone}</span>
+            <span>{phone ?? "N/A"}</span>
           </div>
           <div className="flex items-center gap-2 text-slate-600">
             <MapPin className="w-4 h-4" />
-            <span className="truncate">{address}</span>
+            <span className="truncate">{address ?? "N/A"}</span>
           </div>
           <div className="flex items-center gap-2 text-slate-600">
             <Calendar className="w-4 h-4" />

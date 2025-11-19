@@ -22,9 +22,16 @@ import { TabsContent } from "@/components/ui/tabs";
 import { Eye, Search, Star } from "lucide-react";
 import type { Ticket } from "@/features/tickets/ticket.types";
 import { useGetTickets } from "@/features/tickets/hooks/use-get-tickets.hook";
+import { useAuth } from "@/features/auth/hook/use-auth";
 
 export function ClientPortalTickets() {
+  const { user } = useAuth();
   const { data } = useGetTickets();
+
+  const ticketsByUser = data?.content.filter((ticket) => {
+    return ticket.requesterId === user?.id;
+  });
+
 
   const getStatusBadge = (status: string) => {
     const variants = {
@@ -65,13 +72,13 @@ export function ClientPortalTickets() {
 
   return (
     <TabsContent value="tickets" className="space-y-6">
-      <Card className="border border-slate-200 shadow-sm">
+      <Card className="border h-full border-slate-200 shadow-sm">
         <CardHeader>
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <CardTitle className="text-xl text-slate-900">
               Meus Chamados
             </CardTitle>
-            <div className="flex gap-3">
+            {/* <div className="flex gap-3">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4" />
                 <Input
@@ -90,7 +97,7 @@ export function ClientPortalTickets() {
                   <SelectItem value="resolved">Resolvidos</SelectItem>
                 </SelectContent>
               </Select>
-            </div>
+            </div> */}
           </div>
         </CardHeader>
         <CardContent>
@@ -119,7 +126,7 @@ export function ClientPortalTickets() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {data?.content?.map((ticket: Ticket) => (
+                {ticketsByUser?.map((ticket: Ticket) => (
                   <TableRow
                     key={ticket.id}
                     className="border-slate-100 hover:bg-slate-50"
@@ -136,22 +143,21 @@ export function ClientPortalTickets() {
                     <TableCell>
                       {getPriorityBadge(ticket?.priority ?? "Baixa")}
                     </TableCell>
-                    {ticket.createdAt && (
-                      <TableCell className="text-slate-600">
-                        {new Date(ticket.createdAt).toLocaleDateString("pt-BR", {
-                          day: "2-digit",
-                          month: "2-digit",
-                          year: "2-digit",
-                        })}
-                      </TableCell>
-                    )}
+
+                    <TableCell className="text-slate-600">
+                      {ticket.createdAt ? new Date(ticket.createdAt).toLocaleDateString("pt-BR", {
+                        day: "2-digit",
+                        month: "2-digit",
+                        year: "2-digit",
+                      }) : "--"}
+                    </TableCell>
                     <TableCell className="text-right">
                       <div className="flex gap-2 justify-end">
                         <Button
                           variant="ghost"
                           size="sm"
-                          onClick={console.log}
                           className="text-blue-600 hover:text-blue-700"
+                          asChild
                         >
                           <InternalLink
                             className="flex gap-1 items-center"

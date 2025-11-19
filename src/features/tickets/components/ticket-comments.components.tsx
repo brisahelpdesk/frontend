@@ -78,6 +78,7 @@ export function TicketComments(props: Props) {
             (oldData: Ticket | undefined) => {
 
               console.log("Old Data:", oldData);
+              console.log("New Comment:", newComment);
 
               if (!oldData) return oldData;
 
@@ -90,7 +91,7 @@ export function TicketComments(props: Props) {
                     {
                       id: newComment.id,
                       content: newComment.content,
-                      timestamp: newComment.timestamp,
+                      timestamp: newComment.createdAt,
                       type: newComment.type,
                       sender: newComment.sender,
                     }

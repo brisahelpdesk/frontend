@@ -12,51 +12,40 @@ import {
 import { Form } from "@/components/ui/form";
 import { Plus } from "lucide-react";
 import { FormFieldSwitch } from "@/components/form-field-switch";
-import { useCreateEmployee } from "../hooks/use-create-employee";
+import { useCreateClient } from "../hooks/use-create-client";
+import { FormFieldPassword } from "@/components/input-password";
 
-export function CreateEmployee() {
-  const { 
-    form, 
-    onSubmit, 
-    isPending, 
-    setOpenModal 
-  } = useCreateEmployee();
+export function CreateClient() {
+  const { form, onSubmit, openModal,isPending, setOpenModal } = useCreateClient();
 
   return (
-    <Dialog>
+    <Dialog open={openModal} onOpenChange={setOpenModal}>
       <DialogTrigger asChild>
-        <Button className="bg-blue-600 hover:bg-blue-700" onClick={() => setOpenModal(true)}>
+        <Button
+          className="bg-blue-600 hover:bg-blue-700"
+          onClick={() => setOpenModal(true)}
+        >
           <Plus className="w-4 h-4 mr-2" />
-          Novo Usuário
+          Novo Cliente
         </Button>
       </DialogTrigger>
 
       <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>
-          <DialogTitle className="text-xl">Cadastrar Novo Usuário</DialogTitle>
+          <DialogTitle className="text-xl">Cadastrar Cliente</DialogTitle>
           <DialogDescription>
-            Preencha as informações básicas do usuário
+            Preencha as informações básicas do cliente
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={onSubmit}>
-            <div className="grid grid-cols-2 gap-4">
+            <div>
               <FormFieldInput
-                name="firstName"
+                name="name"
                 label="Nome"
                 placeholder="Joao"
                 control={form.control}
-                id="firstName"
-                disabled={isPending}
-                required
-              />
-
-              <FormFieldInput
-                name="lastName"
-                label="Sobrenome"
-                placeholder="Silva"
-                control={form.control}
-                id="lastName"
+                id="name"
                 disabled={isPending}
                 required
               />
@@ -85,19 +74,25 @@ export function CreateEmployee() {
               />
             </div>
 
-            <div className="mt-4 grid grid-cols-2 gap-4">
-              <FormFieldSwitch
-                name="isActive"
-                label="Ativo"
+            <div className="mt-4">
+              <FormFieldPassword
+                label="Senha"
+                placeholder="Digite sua senha"
+                required
+                id="password"
+                name="password"
                 control={form.control}
-                id="isActive"
-                disabled={isPending}
               />
             </div>
 
             <DialogFooter className="mt-4">
               <div className="flex justify-end gap-2">
-                <Button variant="outline" type="reset" onClick={() => setOpenModal(false)} disabled={isPending}>
+                <Button
+                  variant="outline"
+                  type="reset"
+                  onClick={() => setOpenModal(false)}
+                  disabled={isPending}
+                >
                   Cancelar
                 </Button>
                 <Button

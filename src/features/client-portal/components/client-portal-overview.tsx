@@ -14,10 +14,26 @@ import {
 import type { Ticket } from "@/features/tickets/ticket.types";
 import { InternalLink } from "@/components/internal-link";
 import { useGetTickets } from "@/features/tickets/hooks/use-get-tickets.hook";
+import { useAuth } from "@/features/auth/hook/use-auth";
 
 export function ClientPortalOverview() {
-
+  const { user } = useAuth();
   const { data } = useGetTickets();
+  
+  const userId = user?.id;
+
+  const ticketsByUser = data?.content.filter((ticket) => ticket.id === userId);
+
+  console.log("Tickets do usuário:", ticketsByUser);
+
+  const chamadosEsteMes = ticketsByUser?.filter((ticket) => {
+    const createdAt = new Date(ticket.createdAt);
+    const now = new Date();
+    return (
+      createdAt.getMonth() === now.getMonth() &&
+      createdAt.getFullYear() === now.getFullYear()
+    );
+  }).length;
 
   const getStatusBadge = (status: string) => {
     const variants = {
@@ -62,7 +78,7 @@ export function ClientPortalOverview() {
                 <p className="text-sm font-medium text-slate-600">
                   Chamados Este Mês
                 </p>
-                <p className="text-2xl font-bold text-slate-900">{12}</p>
+                <p className="text-2xl font-bold text-slate-900">{chamadosEsteMes}</p>
               </div>
               <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
                 <FileText className="w-6 h-6 text-blue-600" />
@@ -92,25 +108,9 @@ export function ClientPortalOverview() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-slate-600">
-                  Plano Contratado
-                </p>
-                <p className="text-2xl font-bold text-slate-900">Premium</p>
-              </div>
-              <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
-                <Building className="w-6 h-6 text-purple-600" />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border border-slate-200 shadow-sm">
-          <CardContent>
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-slate-600">
                   Chamados Abertos
                 </p>
-                <p className="text-2xl font-bold text-slate-900">3</p>
+                <p className="text-2xl font-bold text-slate-900">{ticketsByUser?.length}</p>
               </div>
               <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
                 <AlertCircle className="w-6 h-6 text-orange-600" />
@@ -128,7 +128,7 @@ export function ClientPortalOverview() {
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            {data?.content.slice(0, 3)?.map((ticket: Ticket) => (
+            {ticketsByUser?.slice(0, 3)?.map((ticket: Ticket) => (
               <div
                 key={ticket.id}
                 className="flex items-center justify-between p-4 bg-slate-50 rounded-lg border border-slate-200"

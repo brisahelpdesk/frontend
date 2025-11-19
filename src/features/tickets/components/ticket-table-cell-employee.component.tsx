@@ -10,6 +10,10 @@ interface Props {
 export function TicketTableCellEmployee({ employeeId }: Props) {
   const { employee } = useFetchEmployeeById(employeeId);
 
+  if (!employee) {
+    return <TableCell>--</TableCell>;
+  }
+
   return (
     <TableCell>
       <div className="flex items-center gap-2">

@@ -5,15 +5,15 @@ import { ClientPortalNewTicket } from "../components/client-portal-new-ticket";
 
 export function ClientPortalPage() {  
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-      <Tabs defaultValue="overview" className="space-y-6">
-        <TabsList className="grid w-full max-w-md sm:w-auto grid-cols-3 bg-slate-100">
-          <TabsTrigger
+    <div className="max-w-7xl mx-auto h-[calc(100vh-65px)] px-4 sm:px-6 lg:px-8 py-6">
+      <Tabs defaultValue="tickets" className="space-y-6">
+        <TabsList className="grid w-full max-w-md sm:w-auto grid-cols-2 bg-slate-100">
+          {/* <TabsTrigger
             value="overview"
             className="data-[state=active]:bg-white data-[state=active]:text-blue-600"
           >
             Visão Geral
-          </TabsTrigger>
+          </TabsTrigger> */}
           <TabsTrigger
             value="tickets"
             className="data-[state=active]:bg-white data-[state=active]:text-blue-600"
@@ -27,7 +27,7 @@ export function ClientPortalPage() {
             Novo Chamado
           </TabsTrigger>
         </TabsList>
-        <ClientPortalOverview />
+        {/* <ClientPortalOverview /> */}
         <ClientPortalTickets />
         <ClientPortalNewTicket />
       </Tabs>

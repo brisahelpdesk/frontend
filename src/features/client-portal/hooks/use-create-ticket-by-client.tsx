@@ -53,8 +53,8 @@ export function useCreateTicketByClient() {
       }),
     onSuccess: (response) => {
       toast.success("Ticket criado com sucesso!");
-      form.reset();
       navigate(`/client-portal/tickets/${response.id}`);
+      form.reset();
     },
     onError: (err: any) => {
       toast.error("Erro ao criar o ticket", {
