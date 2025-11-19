@@ -14,7 +14,7 @@ export function  EmployeeList() {
           key={user.id + "user-card-list"} 
           id={user.id}
           name={`${user.firstName} ${user.lastName}`}
-          email={user.username}
+          email={user.username ? user.username : "sem email"}
           status={user.isActive ? "Ativo" : "Inativo"}
           lastLogin={new Date().toLocaleDateString("pt-BR")} 
         />

@@ -1,5 +1,4 @@
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ClientPortalOverview } from "../components/client-portal-overview";
 import { ClientPortalTickets } from "../components/client-portal-tickets";
 import { ClientPortalNewTicket } from "../components/client-portal-new-ticket";
 

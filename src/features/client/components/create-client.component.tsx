@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/dialog";
 import { Form } from "@/components/ui/form";
 import { Plus } from "lucide-react";
-import { FormFieldSwitch } from "@/components/form-field-switch";
 import { useCreateClient } from "../hooks/use-create-client";
 import { FormFieldPassword } from "@/components/input-password";
 

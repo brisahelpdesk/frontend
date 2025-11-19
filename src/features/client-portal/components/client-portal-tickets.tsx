@@ -2,14 +2,6 @@ import { InternalLink } from "@/components/internal-link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import {
   Table,
   TableBody,
@@ -19,7 +11,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { TabsContent } from "@/components/ui/tabs";
-import { Eye, Search, Star } from "lucide-react";
+import { Eye, Star } from "lucide-react";
 import type { Ticket } from "@/features/tickets/ticket.types";
 import { useGetTickets } from "@/features/tickets/hooks/use-get-tickets.hook";
 import { useAuth } from "@/features/auth/hook/use-auth";

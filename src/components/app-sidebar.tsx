@@ -1,8 +1,6 @@
 import {
-  ChartLine,
   ChartNoAxesColumn,
   Package,
-  Settings,
   Ticket,
   Timer,
   Users,
@@ -10,7 +8,6 @@ import {
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarHeader,
@@ -20,7 +17,6 @@ import {
   SidebarMenuItem,
   SidebarProvider,
 } from "./ui/sidebar";
-import { Link } from "react-router";
 import { AppSidebarLink } from "./app-sidebar-link";
 
 const menuItems = [

@@ -2,6 +2,7 @@ import type { Department } from "../department/department-types";
 
 export interface Employee {
   id: number;
+  username?: string;
   firstName: string;
   lastName: string;
   cpf: string;
