@@ -101,17 +101,17 @@ export function TicketTable() {
                     {ticket.title}
                   </TableCell>
                   <TableCell>
-                    {getStatusBadge(ticket.status ?? "Em Andamento")}
+                    {getStatusBadge(ticket?.status ?? "Em Andamento")}
                   </TableCell>
                   <TableCell>
-                    {getPriorityBadge(ticket.priority ?? "Baixo")}
+                    {getPriorityBadge(ticket?.priority ?? "Baixo")}
                   </TableCell>
                   <TicketTableCellEmployee
-                    employeeId={ticket.responsibleEmployeeId}
+                    employeeId={ticket?.responsibleEmployeeId}
                   />
                   <TableCell className="text-slate-600">
                     {ticket?.updatedAt
-                      ? new Date(ticket.updatedAt).toLocaleDateString("pt-BR")
+                      ? new Date(ticket?.updatedAt).toLocaleDateString("pt-BR")
                       : "-"}
                   </TableCell>
                   <TableCell className="text-center">
@@ -123,7 +123,7 @@ export function TicketTable() {
                     >
                       <InternalLink
                         className="flex gap-1 items-center"
-                        href={`${ticket.id}`}
+                        href={`${ticket?.id}`}
                       >
                         <Eye className="w-4 h-4 mr-1" />
                         Ver

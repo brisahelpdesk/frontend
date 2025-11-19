@@ -17,8 +17,8 @@ export function TicketTableCellEmployee({ employeeId }: Props) {
         <Avatar className="h-6 w-6">
           <AvatarImage src="" />
           <AvatarFallback className="bg-slate-200 text-slate-700 text-xs">
-            {employee?.firstName[0].toUpperCase()}
-            {employee?.lastName[0].toUpperCase()}
+            {employee?.firstName[0]?.toUpperCase()}
+            {employee?.lastName[0]?.toUpperCase()}
           </AvatarFallback>
         </Avatar>
         <span className="text-slate-700 text-sm">{employee?.firstName} {employee?.lastName}</span>

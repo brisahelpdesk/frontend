@@ -59,8 +59,8 @@ export function useCreateTicketByEmployee() {
       }),
     onSuccess: (response) => {
       toast.success("Ticket criado com sucesso!");
-      form.reset();
       navigate(`/app/tickets/${response.id}`);
+      form.reset();
     },
     onError: (err: Error) => {
       toast.error("Erro ao criar o ticket", {

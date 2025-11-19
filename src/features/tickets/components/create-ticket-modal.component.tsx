@@ -91,7 +91,7 @@ export function CreateTicketModal() {
                 name="slaId"
                 label="SLA *"
                 selectItems={
-                  (slas || []).map((s: any) => ({
+                  (slas || []).map((s) => ({
                     value: String(s.id),
                     label: s.name || `SLA #${s.id}`,
                   }))
