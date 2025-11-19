@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/dialog";
 import { Form } from "@/components/ui/form";
 import { Plus } from "lucide-react";
-import { FormFieldSelect } from "@/components/form-field-select";
 import { FormFieldSwitch } from "@/components/form-field-switch";
 import { useCreateEmployee } from "../hooks/use-create-employee";
 
@@ -20,16 +19,9 @@ export function CreateEmployee() {
     form, 
     onSubmit, 
     isPending, 
-    departments, 
     openModal, 
     setOpenModal 
   } = useCreateEmployee();
-
-  const selectDepartmentItems =
-    departments?.map((dept) => ({
-      value: dept.id.toString(),
-      label: dept.name,
-    })) || [];
 
   return (
     <Dialog open={openModal}>
@@ -77,17 +69,6 @@ export function CreateEmployee() {
                 placeholder="10010010010"
                 control={form.control}
                 id="cpf"
-                disabled={isPending}
-                required
-              />
-
-              <FormFieldSelect
-                name="departmentId"
-                label="Departamento"
-                placeholder="Selecione um departamento"
-                control={form.control}
-                id="departmentId"
-                selectItems={selectDepartmentItems}
                 disabled={isPending}
                 required
               />

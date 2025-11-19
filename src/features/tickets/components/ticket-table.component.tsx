@@ -111,14 +111,13 @@ export function TicketTable() {
                   />
                   <TableCell className="text-slate-600">
                     {ticket?.updatedAt
-                      ? new Date(ticket?.updatedAt).toLocaleDateString("pt-BR")
+                      ? new Date(ticket?.updatedAt)?.toLocaleDateString("pt-BR")
                       : "-"}
                   </TableCell>
                   <TableCell className="text-center">
                     <Button
                       variant="ghost"
                       size="sm"
-                      onClick={console.log}
                       className="text-blue-600 hover:text-blue-700"
                     >
                       <InternalLink

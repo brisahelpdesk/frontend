@@ -3,9 +3,20 @@ import type { CreateEmployeeSchemaType } from "./employee-schema";
 import type { Employee } from "./employee-types";
 import type { FilterState } from "./hooks/use-filter-employee";
 
+export interface  CreateEmployeeResponse {
+  userId: number,
+  firstName: string,
+  lastName: string,
+  cpf: string,
+  internalCode: string,
+  email: string,
+  isActive: true,
+  createdAt: string,
+  updatedAt: string
+}
 
 export async function createEmployee(data: CreateEmployeeSchemaType) {
-  return Api.fetch<CreateEmployeeSchemaType, Employee>({
+  return Api.fetch<CreateEmployeeSchemaType, CreateEmployeeResponse>({
     method: "POST",
     endpoint: "/employees",
     data,

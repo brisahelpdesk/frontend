@@ -14,11 +14,6 @@ const EmployeeCpf = z
   .max(14, { message: "CPF deve ter no máximo 14 caracteres" });
 const EmployeeEmail = z
   .email({ message: "E-mail inválido" });
-const DepartmentId = z
-  .string()
-  .refine((val) => !isNaN(Number(val)), {
-    message: "categoriaId deve ser um número válido",
-  });
 
 
 export const CreateEmployeeSchema = z.object({
@@ -26,7 +21,6 @@ export const CreateEmployeeSchema = z.object({
   lastName: EmployeeLastName,
   cpf: EmployeeCpf,
   email: EmployeeEmail,
-  departmentId: DepartmentId,
   isActive: z.boolean(),
 });
 

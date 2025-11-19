@@ -1,22 +1,24 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { useFetchDepartments } from "@/features/department/hooks/use-fetch-departments";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   CreateEmployeeSchema,
   type CreateEmployeeSchemaType,
 } from "../employee-schema";
-import { createEmployee } from "../employee.service";
+import {
+  createEmployee,
+  type CreateEmployeeResponse,
+} from "../employee.service";
 import type { Employee } from "../employee-types";
 import { useState } from "react";
 import { useFiltersEmployee } from "./use-filter-employee";
+
 
 export function useCreateEmployee() {
   const [openModal, setOpenModal] = useState(false);
   const filters = useFiltersEmployee();
   const queryClient = useQueryClient();
-
 
   const form = useForm<CreateEmployeeSchemaType>({
     defaultValues: {
@@ -24,7 +26,6 @@ export function useCreateEmployee() {
       lastName: "",
       email: "",
       cpf: "",
-      departmentId: "",
       isActive: false,
     },
     resolver: zodResolver(CreateEmployeeSchema),
@@ -36,19 +37,29 @@ export function useCreateEmployee() {
 
     mutationFn: createEmployee,
 
-    onSuccess: (data: Employee) => {
+    onSuccess: (data: CreateEmployeeResponse) => {
       toast.success("Funcionário criado com sucesso.", {
         richColors: true,
         description: "O funcionário foi adicionado à lista.",
       });
 
-      console.log("Novo funcionário criado:", data);
-
       queryClient.setQueryData(
         ["fetchEmployees", filters],
         (prevEmployees: Employee[]) => {
           if (!prevEmployees) return [];
-          return [...prevEmployees, data];
+          return [
+            ...prevEmployees,
+            {
+              id: data.userId,
+              firstName: data.firstName,
+              lastName: data.lastName,
+              email: data.email,
+              cpf: data.cpf,
+              isActive: data.isActive,
+              createdAt: data.createdAt,
+              updatedAt: data.updatedAt,
+            },
+          ];
         }
       );
 
@@ -64,8 +75,6 @@ export function useCreateEmployee() {
     },
   });
 
-  const { departments } = useFetchDepartments();
-
   function onSubmit(data: CreateEmployeeSchemaType) {
     mutate(data);
   }
@@ -75,7 +84,6 @@ export function useCreateEmployee() {
     setOpenModal,
     form,
     isPending,
-    departments,
     onSubmit: form.handleSubmit(onSubmit),
   };
 }

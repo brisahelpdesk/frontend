@@ -44,9 +44,9 @@ export function CreateTicketModal() {
                 control={form.control}
                 name="category"
                 label="Categoria do produto *"
-                selectItems={(categories || []).map((cat) => ({
-                  value: cat.id.toString(),
-                  label: cat.name,
+                selectItems={(categories || [])?.map((cat) => ({
+                  value: cat?.id?.toString(),
+                  label: cat?.name,
                 }))}
                 placeholder="Selecione a categoria"
                 required
@@ -57,9 +57,9 @@ export function CreateTicketModal() {
                 control={form.control}
                   name="productId"
                 label="Equipamento/Sistema Específico *"
-                selectItems={(productsFiltered || []).map((prod) => ({
-                  value: prod.id.toString(),
-                  label: prod.name,
+                selectItems={(productsFiltered || [])?.map((prod) => ({
+                  value: prod?.id?.toString(),
+                  label: prod?.name,
                 }))}
                 placeholder={
                   category
