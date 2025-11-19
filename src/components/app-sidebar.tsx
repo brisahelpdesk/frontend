@@ -29,7 +29,7 @@ const menuItems = [
   { title: "Funcionários", url: "employees", Icon: Users },
   { title: "Clientes", url: "clients", Icon: Users },
   { title: "SLAs", url: "slas", Icon: Timer },
-  { title: "Relatórios", url: "reports", Icon: ChartLine },
+  // { title: "Relatórios", url: "reports", Icon: ChartLine },
   { title: "Produtos/Serviços", url: "products", Icon: Package },
 ];
 
@@ -71,7 +71,7 @@ export function AppSidebar(props: AppSidebarProps): React.ReactNode {
             </SidebarGroupContent>
           </SidebarGroup>
         </SidebarContent>
-        <SidebarFooter>
+        {/* <SidebarFooter>
           <SidebarMenu>
             <SidebarMenuItem>
               <SidebarMenuButton asChild>
@@ -87,7 +87,7 @@ export function AppSidebar(props: AppSidebarProps): React.ReactNode {
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>
-        </SidebarFooter>
+        </SidebarFooter> */}
       </Sidebar>
       <SidebarInset>{props.children}</SidebarInset>
     </SidebarProvider>
