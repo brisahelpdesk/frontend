@@ -20,6 +20,7 @@ export function TicketDetailsPage(): React.ReactNode {
   const { data } = useGetTicketById(ticketId || "");
   const isClosed = !!(data as unknown as { closedAt?: string })?.closedAt;
 
+
   return (
     <>
       <AppPageHeader
@@ -98,7 +99,7 @@ export function TicketDetailsPage(): React.ReactNode {
               />
             )}
             {
-              (isAdmin() || isSupervisor() || (data && isLoggedIn(data?.requesterId))) &&
+              (isAdmin() || isSupervisor() || (data && isLoggedIn(data?.responsibleEmployeeId))) &&
               <>
                 <ChangeStatusModal ticketId={ticketId} currentStatus={data?.status} disabled={isClosed} />
                 <ChangePriorityModal ticketId={ticketId} currentPriority={data?.priority} disabled={isClosed} />
@@ -107,7 +108,7 @@ export function TicketDetailsPage(): React.ReactNode {
           </div>
           <div className="flex gap-2">
             {
-              (isAdmin() || isSupervisor() || (data && isLoggedIn(data?.requesterId))) &&
+              (isAdmin() || isSupervisor() || (data && isLoggedIn(data?.responsibleEmployeeId))) &&
               <CloseTicketModal ticketId={ticketId} disabled={isClosed} />
             }
           </div>

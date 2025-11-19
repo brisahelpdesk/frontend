@@ -32,6 +32,9 @@ export const useAuth = () => {
 
   const isLoggedIn = (id: number) => {
     if (!store) return false;
+
+    console.log("User ID:", store?.user?.id);
+    console.log("Checked ID:", id);
     return store?.user?.id === id;
   }
 
