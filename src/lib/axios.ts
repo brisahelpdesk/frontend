@@ -21,8 +21,6 @@ api.interceptors.request.use((config) => {
     }
   }
 
-  console.info("Request:", config);
-
   return config;
 });
 

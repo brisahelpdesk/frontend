@@ -11,8 +11,8 @@ export const useAuth = () => {
 
   const handleLogin = async (credentials: LoginCredentials) => {
     await store.login(credentials);
+    
     if (store.isAuthenticated && store.user) {
-      // Redirecionar baseado no tipo de usuário
       const route = getInitialRoute(store.user.roles);
       navigate(route, { replace: true });
     }

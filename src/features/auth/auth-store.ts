@@ -69,7 +69,7 @@ export const useAuthStore = create<AuthStore>()(
               firstName: response.name,
               lastName: "",
               cpf: response.cpf,
-              email: "",
+              email: response.email,
               department: { id: 0, name: "" },
               isPasswordChanged: true,
               isActive: true,
@@ -144,12 +144,10 @@ export const useAuthStore = create<AuthStore>()(
         user: state.user,
         token: state.token,
       }),
-      // Validar roles ao restaurar estado do localStorage
       onRehydrateStorage: () => (state) => {
         if (state?.user) {
           const userType = getUserType(state.user.roles);
           
-          // Se o usuário não tem roles válidas, desconectar
           if (!state.user.roles || state.user.roles.length === 0 || userType === 'unknown') {
             console.warn("Usuário sem roles válidas detectado. Desconectando...");
             state.user = null;

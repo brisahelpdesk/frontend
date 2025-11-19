@@ -9,6 +9,7 @@ export interface LoginCredentials {
 export interface LoginResponse {
   userId: number;
   name: string;
+  email: string;
   cpf: string;
   roles: string[];
   jwt: string;
