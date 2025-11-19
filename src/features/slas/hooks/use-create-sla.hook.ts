@@ -56,8 +56,8 @@ export function useCreateSLA() {
     mutate({
       name: data.name,
       description: data.description,
-      responseTime: data.responseTime * 60,
-      resolutionTime: data.resolutionTime * 60,
+      responseTime: data.responseTime,
+      resolutionTime: data.resolutionTime,
       isActive: data.isActive,
     });
   }, [mutate]);

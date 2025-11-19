@@ -17,7 +17,7 @@ export const CloseTicketModal = memo(function CloseTicketModal({ ticketId, disab
   const handleConfirm = () => {
     const payload = {
       closedById: user?.id ?? 0,
-      status: "resolved",
+      status: "RESOLVIDO",
       closedAt: new Date().toISOString(),
     };
 
@@ -26,7 +26,6 @@ export const CloseTicketModal = memo(function CloseTicketModal({ ticketId, disab
     });
   };
 
-  // If disabled (ticket closed), render a disabled button instead of the dialog trigger
   if (disabled) {
     return (
       <Button
