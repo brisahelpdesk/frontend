@@ -13,7 +13,10 @@ export function isEmployee(roles?: string[]): boolean {
   if (!roles || roles.length === 0) return false;
   return roles.some(role => 
     role.toLowerCase() === 'admin' ||
-    role.toLowerCase() === 'supervisor'
+    role.toLowerCase() === 'supervisor' ||
+    role.toLowerCase() === 'employee' ||
+    role.toLowerCase() === 'funcionario' ||
+    role.toLowerCase() === 'technician'
   );
 }
 
