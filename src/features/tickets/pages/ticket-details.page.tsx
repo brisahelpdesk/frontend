@@ -9,9 +9,12 @@ import { TicketDetailsProduct } from "../components/ticket-details-product.compo
 import { TicketComments } from "../components/ticket-comments.components";
 import { AssignTicketModal } from "../components/assign-ticket-modal.component";
 import { CloseTicketModal } from "../components/close-ticket-modal.component";
+import { useAuth } from "@/features/auth/hook/use-auth";
+
 
 export function TicketDetailsPage(): React.ReactNode {
   const params = useParams();
+  const { isAdmin, isSupervisor, isLoggedIn } = useAuth();
   const ticketId = params.ticketId;
   const { data } = useGetTicketById(ticketId || "");
   const isClosed = !!(data as any)?.closedAt;
@@ -19,7 +22,9 @@ export function TicketDetailsPage(): React.ReactNode {
   return (
     <>
       <AppPageHeader
-        name={`#${ticketId} - ${data?.title} ${data?.status === '- resolved' ? '(Fechado)' : ''}`}
+        name={`#${ticketId} - ${data?.title} ${
+          data?.status === "- resolved" ? "(Fechado)" : ""
+        }`}
         description={`Detalhes sobre o ticket #${ticketId}`}
       />
       <div className="space-y-6 d">
@@ -68,26 +73,48 @@ export function TicketDetailsPage(): React.ReactNode {
 
         <Separator />
 
-        <TicketComments 
-          ticketId={Number(ticketId)} 
-          comments={data?.chat?.messages || []} 
+        <TicketComments
+          ticketId={Number(ticketId)}
+          comments={data?.chat?.messages || []}
           responsibleEmployeeId={data?.responsibleEmployeeId}
         />
-      
+
         <Separator />
 
         <div className="flex flex-wrap justify-between gap-3 pt-2">
           <div className="flex gap-2">
-            <AssignTicketModal ticketId={ticketId} currentResponsibleId={data?.responsibleEmployeeId} disabled={isClosed} />
-            <Button variant="outline" className="border-slate-200" disabled={isClosed}>
-              Alterar Status
-            </Button>
-            <Button variant="outline" className="border-slate-200" disabled={isClosed}>
-              Alterar Prioridade
-            </Button>
+            {(isAdmin() || isSupervisor()) && (
+              <AssignTicketModal
+                ticketId={ticketId}
+                currentResponsibleId={data?.responsibleEmployeeId}
+                disabled={isClosed}
+              />
+            )}
+            {
+              (isAdmin() || isSupervisor() || (data && isLoggedIn(data?.requesterId))) &&
+              <>
+                <Button
+                  variant="outline"
+                  className="border-slate-200"
+                  disabled={isClosed}
+                >
+                  Alterar Status
+                </Button>
+                <Button
+                  variant="outline"
+                  className="border-slate-200"
+                  disabled={isClosed}
+                >
+                  Alterar Prioridade
+                </Button>
+              </>
+            }
           </div>
           <div className="flex gap-2">
-            <CloseTicketModal ticketId={ticketId} disabled={isClosed} />
+            {
+              (isAdmin() || isSupervisor() || (data && isLoggedIn(data?.requesterId))) &&
+              <CloseTicketModal ticketId={ticketId} disabled={isClosed} />
+            }
           </div>
         </div>
       </div>

@@ -20,6 +20,21 @@ export const useAuth = () => {
 
   const handleLoginSubmit = form.handleSubmit(handleLogin);
 
+  const isAdmin = () => {
+    if (!store) return false;
+    return store?.user?.roles?.includes("ADMIN");
+  }
+
+  const isSupervisor = () => {
+    if (!store) return false;
+    return store?.user?.roles?.includes("SUPERVISOR");
+  }
+
+  const isLoggedIn = (id: number) => {
+    if (!store) return false;
+    return store?.user?.id === id;
+  }
+
   return {
     user: store.user,
     isAuthenticated: !!store.user && !!store.token,
@@ -27,5 +42,8 @@ export const useAuth = () => {
     form,
     login: handleLoginSubmit,
     logout: store.logout,
+    isAdmin,
+    isSupervisor,
+    isLoggedIn
   };
 };

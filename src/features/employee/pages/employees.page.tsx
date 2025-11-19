@@ -1,6 +1,7 @@
 import { AppPageHeader } from "@/components/app-page-header";
 import { CreateEmployee } from "../components/create-employee.component";
 import { EmployeeList } from "../components/employee-list.component";
+import { useAuth } from "@/features/auth/hook/use-auth";
 
 // const statsCards = [
 //   {
@@ -27,6 +28,7 @@ import { EmployeeList } from "../components/employee-list.component";
 // ];
 
 export function EmployeePage() {
+  const { isAdmin, isSupervisor } = useAuth();
   return (
     <>
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
@@ -34,7 +36,7 @@ export function EmployeePage() {
           name="Gerenciamento de Funcionários"
           description="Visualize e gerencie todos os funcionários do sistema"
         />
-        <CreateEmployee />
+        {(isAdmin() || isSupervisor()) && <CreateEmployee />}
       </div>
 
       {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">

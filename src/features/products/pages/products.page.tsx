@@ -2,8 +2,11 @@ import { AppPageHeader } from "@/components/app-page-header";
 import { CreateProductModal } from "../components/create-product-modal";
 import { ProductTable } from "../components/product-table";
 import { ProductsProvider } from "../components/products-provider";
+import { useAuth } from "@/features/auth/hook/use-auth";
 
 export function ProductsPage() {
+  const { isAdmin } = useAuth();
+
   return (
     <ProductsProvider>
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
@@ -11,7 +14,7 @@ export function ProductsPage() {
           name="Produtos e Serviços"
           description="Gerencie o catálogo de produtos e serviços oferecidos"
         />
-        <CreateProductModal />
+        {isAdmin() && <CreateProductModal />}
       </div>
       {/* <ProductStatsList /> */}
       {/* <ProductFilter /> */}
