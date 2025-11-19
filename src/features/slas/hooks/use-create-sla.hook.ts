@@ -6,7 +6,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CreateSLASchema, type CreateSLAFields } from "../models/sla.schema";
 import { createSLA } from "../services/sla.service";
 import type { SLA } from "../models/sla.types";
-import type { AxiosError } from "axios";
 
 export function useCreateSLA() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -41,11 +40,12 @@ export function useCreateSLA() {
         }
       );
 
-      form.reset();
       setIsModalOpen(false);
+
+      form.reset();
     },
-    onError: (error: AxiosError<{ message: string }>) => {
-      toast.error(`Erro ao criar SLA: ${error.response?.data?.message || error.message}`, {
+    onError: () => {
+      toast.error("Erro ao criar SLA", {
         richColors: true,
         description: "Por favor, verifique os dados e tente novamente.",
       });

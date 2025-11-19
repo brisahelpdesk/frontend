@@ -46,8 +46,6 @@ export function TicketComments(props: Props) {
     const token = JSON.parse(authStorage).state.token;
 
     if (!token) {
-      console.log("authStorage:", authStorage);
-      console.error("Token de autenticação não encontrado. Impossível conectar ao WebSocket.");
       return;
     }
 
@@ -59,26 +57,16 @@ export function TicketComments(props: Props) {
       },
 
       reconnectDelay: 5000,
-
-      debug: (str) => {
-        console.log("STOMP Debug:", str); 
-      },
     });
 
     stompClient.onConnect = () => {
-      console.log("WebSocket conectado com sucesso!");
-
       stompClient.subscribe(`/topic/chat/${props.ticketId}`, (message) => {
-        console.log("Mensagem recebida:", message.body);
         if (message.body) {
           const newComment = JSON.parse(message.body);
 
           queryClient.setQueryData(
             ["tickets", String(props.ticketId)],
             (oldData: Ticket | undefined) => {
-
-              console.log("Old Data:", oldData);
-              console.log("New Comment:", newComment);
 
               if (!oldData) return oldData;
 

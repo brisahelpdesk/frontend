@@ -53,15 +53,12 @@ export const SLADetailsPage = memo(function SLADetailsPage() {
     navigate("/app/slas");
   };
 
-  const handleEdit = () => {
-    console.log("Edit SLA:", slaId);
-  };
 
   if (isLoading) {
     return (
       <div className="space-y-6 p-6">
         <div className="flex items-center gap-4">
-          <Button variant="outline" onClick={handleBack}>
+          <Button variant="outline">
             <ArrowLeft className="w-4 h-4 mr-2" />
             Voltar
           </Button>
@@ -104,7 +101,7 @@ export const SLADetailsPage = memo(function SLADetailsPage() {
         </div>
         {isAdmin() && (
           <div className="flex items-center gap-3">
-            <Button onClick={handleEdit} variant="outline">
+            <Button variant="outline">
               <Edit className="w-4 h-4 mr-1" />
               Editar
             </Button>

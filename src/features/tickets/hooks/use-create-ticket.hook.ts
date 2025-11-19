@@ -62,9 +62,9 @@ export function useCreateTicketByEmployee() {
       navigate(`/app/tickets/${response.id}`);
       form.reset();
     },
-    onError: (err: Error) => {
+    onError: () => {
       toast.error("Erro ao criar o ticket", {
-        description: err?.message ?? "Tente novamente mais tarde.",
+        description: "Tente novamente mais tarde.",
       });
     },
   });

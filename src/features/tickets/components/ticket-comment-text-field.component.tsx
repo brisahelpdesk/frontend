@@ -23,7 +23,6 @@ export function TicketCommentTextField(props: Props) {
     event.preventDefault();
 
     if (comment.trim() && props.socketClient.connected) {
-      console.log('Enviando mensagem:', comment);
         props.socketClient.publish({
         destination: `/app/chat/${props.ticketId}`,
         body: comment.trim(),

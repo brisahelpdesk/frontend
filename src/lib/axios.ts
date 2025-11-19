@@ -13,12 +13,15 @@ api.interceptors.request.use((config) => {
   const authStorage = localStorage.getItem("auth-storage");
   
   if (authStorage) {
-    const token = JSON.parse(authStorage).token;
+    const authStorageParsed = JSON.parse(authStorage);
+    const token = authStorageParsed?.state.token;
     
     if (token) {
       config.headers["Authorization"] = `Bearer ${token}`;
     }
   }
+
+  console.info("Request:", config);
 
   return config;
 });
@@ -26,7 +29,7 @@ api.interceptors.request.use((config) => {
 export interface ApiRequest<T> {
   method: "GET" | "POST" | "PUT" | "DELETE";
   endpoint: string;
-  params?: Record<string, any>;
+  params?: Record<string, string | number>;
   data?: T;
 }
 
@@ -42,7 +45,7 @@ export const Api = {
       });
       return response.data;
     } catch (error) {
-      console.log(error);
+      console.error("API Error:", error);
       throw error;
     }
   },

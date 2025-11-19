@@ -37,7 +37,7 @@ export function EmployeeCard(props: Props) {
         <div className="flex items-start justify-between mb-4">
           <div className="flex items-center gap-3">
             <Avatar className="h-12 w-12">
-              <AvatarImage src={"/placeholder.svg"} />
+              <AvatarImage src={""} />
               <AvatarFallback className="bg-slate-200 text-slate-700 font-medium">
                 {splitedName[0][0] + splitedName[splitedName.length - 1][0]}
               </AvatarFallback>

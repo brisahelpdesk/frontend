@@ -28,8 +28,8 @@ export function useDeleteSLA(onSuccessCallback?: () => void) {
         onSuccessCallback();
       }
     },
-    onError: (error: any) => {
-      toast.error(`Erro ao excluir SLA: ${error.response?.data?.message || error.message}`, {
+    onError: () => {
+      toast.error(`Erro ao excluir SLA`, {
         richColors: true,
         description: "Por favor, tente novamente.",
       });

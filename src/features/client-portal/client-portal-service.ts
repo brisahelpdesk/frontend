@@ -16,8 +16,6 @@ interface CreateClientTicketData {
 }
 
 export async function createClientTicket(data: CreateClientTicketData) {
-  console.log("Submitting ticket data:", data);
-
   return await Api.fetch<CreateClientTicketData, Ticket>({
     endpoint: "/tickets/open",
     method: "POST",

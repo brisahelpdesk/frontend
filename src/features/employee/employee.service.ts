@@ -1,7 +1,6 @@
 import { Api } from "@/lib/axios";
 import type { CreateEmployeeSchemaType } from "./employee-schema";
 import type { Employee } from "./employee-types";
-import type { FilterState } from "./hooks/use-filter-employee";
 
 export interface  CreateEmployeeResponse {
   userId: number,
@@ -23,15 +22,10 @@ export async function createEmployee(data: CreateEmployeeSchemaType) {
   });
 }
 
-export async function fetchEmployees(filters: FilterState) {
+export async function fetchEmployees() {
   return Api.fetch<undefined, Employee[]>({
     method: "GET",
     endpoint: "/employees",
-    params: {
-      search: filters.search,
-      departmentId: filters.departmentId,
-      status: filters.status,
-    },
   });
 }
 

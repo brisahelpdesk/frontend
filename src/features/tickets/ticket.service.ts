@@ -56,7 +56,6 @@ export type CreateTicketPayload = {
 };
 
 export async function createTicket(data: CreateTicketPayload): Promise<Ticket> {
-  console.log('Creating ticket with data:', data);
   return await Api.fetch<CreateTicketPayload, Ticket>({
     endpoint: `/tickets`,
     method: 'POST',

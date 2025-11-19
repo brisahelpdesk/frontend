@@ -52,8 +52,8 @@ export function useCreateProduct() {
       form.reset();
     },
 
-    onError: (error: any) => {
-      toast.error(`Erro ao criar produto: ${error.response.data.message}`, {
+    onError: () => {
+      toast.error(`Erro ao criar produto`, {
         richColors: true,
         description: "Por favor, verifique os dados e tente novamente.",
       });

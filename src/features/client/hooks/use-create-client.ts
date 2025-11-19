@@ -40,9 +40,6 @@ export function useCreateClient() {
 
       queryClient.setQueryData(["fetchClients"], (prevClients: Pagination<Client>) => {
         if (!prevClients) return [];
-
-        console.log("Previous Clients:", prevClients);
-
         return {
           ...prevClients,
           content: [
@@ -64,8 +61,8 @@ export function useCreateClient() {
       form.reset();
     },
 
-    onError: (error: Error) => {
-      toast.error(`Erro ao criar funcionário: ${error.message}`, {
+    onError: () => {
+      toast.error(`Erro ao criar funcionário:`, {
         richColors: true,
         description: "Por favor, verifique os dados e tente novamente.",
       });

@@ -7,7 +7,7 @@ export function useFetchClientById(clientId?: string | number) {
   return useQuery({
     queryKey: ["client", id],
     queryFn: () => getClientById(id!),
-    enabled: !!id && !isNaN(id), // Só executa se o ID for válido
+    enabled: !!id && !isNaN(id),
     staleTime: 5 * 60 * 1000, // 5 minutos
     retry: (failureCount, error: any) => {
       // Não tenta novamente se for 404 (not found)
@@ -16,10 +16,9 @@ export function useFetchClientById(clientId?: string | number) {
       }
       return failureCount < 2;
     },
-    throwOnError: false, // Não lança erro, deixa o componente lidar
+    throwOnError: false,
     select: (data) => ({
       ...data,
-      // Formatando datas se necessário
       createdDate: data?.createdAt ? new Date(data.createdAt).toLocaleDateString() : '',
       updatedDate: data?.updatedAt ? new Date(data.updatedAt).toLocaleDateString() : '',
     }),

@@ -20,8 +20,8 @@ export function useDeleteProduct(productId: number) {
       navigate("/app/products", { replace: true });
     },
 
-    onError: (error) => {
-      toast.error(`Erro ao excluir produto: ${error.message}`);
+    onError: () => {
+      toast.error(`Erro ao excluir produto`);
     },
   });
 

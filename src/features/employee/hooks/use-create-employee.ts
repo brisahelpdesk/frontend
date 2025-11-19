@@ -67,8 +67,8 @@ export function useCreateEmployee() {
       form.reset();
     },
 
-    onError: (error: Error) => {
-      toast.error(`Erro ao criar funcionário: ${error.message}`, {
+    onError: () => {
+      toast.error(`Erro ao criar funcionário`, {
         richColors: true,
         description: "Por favor, verifique os dados e tente novamente.",
       });

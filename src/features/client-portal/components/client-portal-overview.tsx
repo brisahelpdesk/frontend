@@ -23,8 +23,6 @@ export function ClientPortalOverview() {
 
   const ticketsByUser = data?.content.filter((ticket) => ticket.id === userId);
 
-  console.log("Tickets do usuário:", ticketsByUser);
-
   const chamadosEsteMes = ticketsByUser?.filter((ticket) => {
     const createdAt = new Date(ticket.createdAt);
     const now = new Date();
@@ -148,8 +146,8 @@ export function ClientPortalOverview() {
                   <Button
                     variant="ghost"
                     size="sm"
-                    onClick={console.log}
                     className="text-blue-600 hover:text-blue-700"
+                    asChild
                   >
                     <InternalLink
                       className="flex gap-1 items-center"

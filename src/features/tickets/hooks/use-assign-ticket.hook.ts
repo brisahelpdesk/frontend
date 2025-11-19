@@ -13,7 +13,6 @@ export function useAssignTicket(ticketId?: string) {
     },
     onSuccess: () => {
       toast.success("Ticket atribuído com sucesso");
-      // invalidate the specific ticket and ticket lists
       if (ticketId) {
         queryClient.invalidateQueries({ queryKey: ["tickets", ticketId] });
       }

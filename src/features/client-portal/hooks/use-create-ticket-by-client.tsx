@@ -56,9 +56,9 @@ export function useCreateTicketByClient() {
       navigate(`/client-portal/tickets/${response.id}`);
       form.reset();
     },
-    onError: (err: any) => {
+    onError: () => {
       toast.error("Erro ao criar o ticket", {
-        description: err?.message ?? "Tente novamente mais tarde.",
+        description: "Tente novamente mais tarde.",
       });
     },
   });
