@@ -24,6 +24,17 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response && error.response.status === 401) {
+      localStorage.removeItem("auth-storage");
+      window.location.href = "/auth/login";
+    }
+    return Promise.reject(error);
+  }
+);
+
 export interface ApiRequest<T> {
   method: "GET" | "POST" | "PUT" | "DELETE";
   endpoint: string;

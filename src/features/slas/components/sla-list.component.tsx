@@ -6,6 +6,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Clock, CheckCircle, XCircle, Eye } from "lucide-react";
 import { useNavigate } from "react-router";
 import { useFetchSLAs } from "../hooks/use-fetch-slas.hook";
+import { minToHours } from "@/lib/utils";
 
 export const SLAList = memo(function SLAList() {
   const { slas, isLoading, error } = useFetchSLAs();
@@ -94,12 +95,12 @@ export const SLAList = memo(function SLAList() {
                   </TableCell>
                   <TableCell className="text-center">
                     <Badge variant="outline" className="text-blue-700 border-blue-200">
-                      {sla.responseTime }min
+                      {minToHours(sla.responseTime) }
                     </Badge>
                   </TableCell>
                   <TableCell className="text-center">
                     <Badge variant="outline" className="text-orange-700 border-orange-200">
-                      {sla.resolutionTime }min
+                      {minToHours(sla.resolutionTime) }
                     </Badge>
                   </TableCell>
                   <TableCell className="text-center">{sla.statusBadge}</TableCell>

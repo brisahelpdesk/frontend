@@ -17,6 +17,7 @@ import { useFetchSLAs } from "../hooks/use-fetch-slas.hook";
 import type { SLA } from "../models/sla.types";
 import { useDeleteSLA } from "../hooks/use-delete-sla.hook";
 import { useAuth } from "@/features/auth/hook/use-auth";
+import { minToHours } from "@/lib/utils";
 
 export const SLADetailsPage = memo(function SLADetailsPage() {
   const { slaId } = useParams<{ slaId: string }>();
@@ -175,7 +176,7 @@ export const SLADetailsPage = memo(function SLADetailsPage() {
                 variant="outline"
                 className="text-blue-700 border-blue-200"
               >
-                {sla.responseTime} horas
+                {minToHours(sla.responseTime)}
               </Badge>
             </div>
             <Separator />
@@ -187,7 +188,7 @@ export const SLADetailsPage = memo(function SLADetailsPage() {
                 variant="outline"
                 className="text-orange-700 border-orange-200"
               >
-                {sla.resolutionTime} horas
+                {minToHours(sla.resolutionTime)}
               </Badge>
             </div>
           </CardContent>
