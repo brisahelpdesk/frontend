@@ -67,3 +67,24 @@ export async function createTicket(data: CreateTicketPayload): Promise<Ticket> {
     }
   });
 }
+
+export type UpdateTicketPayload = Partial<{
+  title: string;
+  slaId: number;
+  requesterId: number;
+  productId: number;
+  description: string;
+  priority: string;
+  dueDate: string | Date;
+  status: string;
+  closedById: number;
+  closedAt: string | Date;
+}>;
+
+export async function updateTicket(ticketId: string, data: UpdateTicketPayload): Promise<Ticket> {
+  return await Api.fetch<UpdateTicketPayload, Ticket>({
+    endpoint: `/tickets/${ticketId}`,
+    method: 'PUT',
+    data,
+  });
+}

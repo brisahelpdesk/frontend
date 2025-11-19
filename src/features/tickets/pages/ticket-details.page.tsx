@@ -1,5 +1,4 @@
 import { AppPageHeader } from "@/components/app-page-header";
-import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useParams } from "react-router";
 import { useGetTicketById } from "../hooks/use-get-ticket-by-id.hook";
@@ -9,7 +8,9 @@ import { TicketDetailsProduct } from "../components/ticket-details-product.compo
 import { TicketComments } from "../components/ticket-comments.components";
 import { AssignTicketModal } from "../components/assign-ticket-modal.component";
 import { CloseTicketModal } from "../components/close-ticket-modal.component";
+import { ChangePriorityModal } from "../components/change-priority-modal.component";
 import { useAuth } from "@/features/auth/hook/use-auth";
+import { ChangeStatusModal } from "../components/change-status-modal.component";
 
 
 export function TicketDetailsPage(): React.ReactNode {
@@ -17,7 +18,7 @@ export function TicketDetailsPage(): React.ReactNode {
   const { isAdmin, isSupervisor, isLoggedIn } = useAuth();
   const ticketId = params.ticketId;
   const { data } = useGetTicketById(ticketId || "");
-  const isClosed = !!(data as any)?.closedAt;
+  const isClosed = !!(data as unknown as { closedAt?: string })?.closedAt;
 
   return (
     <>
@@ -50,6 +51,12 @@ export function TicketDetailsPage(): React.ReactNode {
               <TicketDetailsClient id={data?.requesterId} />
               <TicketDetailsEmployee id={data?.responsibleEmployeeId} />
               <TicketDetailsProduct id={data?.productId} />
+              <div className="flex justify-between">
+                <span className="text-slate-600">Status:</span>
+                <span className={`px-3 py-1 rounded-full text-xs font-medium border ${data?.status ? 'bg-slate-100 text-slate-800' : ''}`}>
+                  {data?.status ?? "N/A"}
+                </span>
+              </div>
               <div className="flex justify-between">
                 <span className="text-slate-600">Prioridade:</span>
                 <span
@@ -93,20 +100,8 @@ export function TicketDetailsPage(): React.ReactNode {
             {
               (isAdmin() || isSupervisor() || (data && isLoggedIn(data?.requesterId))) &&
               <>
-                <Button
-                  variant="outline"
-                  className="border-slate-200"
-                  disabled={isClosed}
-                >
-                  Alterar Status
-                </Button>
-                <Button
-                  variant="outline"
-                  className="border-slate-200"
-                  disabled={isClosed}
-                >
-                  Alterar Prioridade
-                </Button>
+                <ChangeStatusModal ticketId={ticketId} currentStatus={data?.status} disabled={isClosed} />
+                <ChangePriorityModal ticketId={ticketId} currentPriority={data?.priority} disabled={isClosed} />
               </>
             }
           </div>
